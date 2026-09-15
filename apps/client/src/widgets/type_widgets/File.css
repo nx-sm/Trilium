@@ -35,8 +35,8 @@ pre.file-preview-content:not(.hljs) {
 .note-detail-file > .audio-preview {
     position: absolute;
     top: 50%;
-    left: 15px;
-    right: 15px;
+    inset-inline-start: 15px;
+    inset-inline-end: 15px;
     width: calc(100% - 30px);
     transform: translateY(-50%);
 }

@@ -105,6 +105,7 @@
     .floating-toolbar {
         position: absolute;
         top: 32px;
+        /* stylelint-disable-next-line property-layout-mappings -- centred with translateX(), which does not flip in RTL */
         left: 50%;
         transform: translateX(-50%);
         display: flex;

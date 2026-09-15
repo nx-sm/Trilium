@@ -124,7 +124,7 @@ body.mobile .search-definition-widget {
 
     .search-setting-table .title-column {
         width: unset;
-        margin-right: 0.5em;
+        margin-inline-end: 0.5em;
         min-width: 30%;
         flex-shrink: 0;
     }

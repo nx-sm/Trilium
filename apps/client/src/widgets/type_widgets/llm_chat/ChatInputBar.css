@@ -99,7 +99,7 @@
 .llm-chat-attachment-remove {
     position: absolute;
     top: 2px;
-    right: 2px;
+    inset-inline-end: 2px;
     width: 18px;
     height: 18px;
     padding: 0;
@@ -269,7 +269,7 @@
 /* Scoped to the dropdown wrapper (not `.llm-chat-model-selector`) so these menu styles
    survive `portalToBody`, which reparents the menu to <body> under this same class. */
 .llm-chat-model-dropdown small {
-    margin-left: 0.5em;
+    margin-inline-start: 0.5em;
     color: var(--muted-text-color);
 }
 

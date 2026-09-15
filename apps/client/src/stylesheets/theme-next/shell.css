@@ -813,8 +813,8 @@ body[dir=rtl] :is(#left-pane, .tree-popup-sidebar) span.fancytree-node.protected
     }
 
     body.mobile #mobile-sidebar-wrapper {
-        border-top-right-radius: 12px;
-        border-bottom-right-radius: 12px;
+        border-start-end-radius: 12px;
+        border-end-end-radius: 12px;
         border-inline-end: 1px solid var(--subtle-border-color);
     }
 }
@@ -1192,8 +1192,8 @@ body.desktop:not(.background-effects) #root-widget.horizontal-layout {
 }
 
 body.layout-horizontal div.tab-row-widget div.note-tab div.note-tab-wrapper {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
 }
 
 .note-tab .note-tab-wrapper {

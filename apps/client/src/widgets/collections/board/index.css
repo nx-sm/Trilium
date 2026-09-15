@@ -727,7 +727,7 @@ body.mobile .board-view-container .board-add-column {
 }
 
 .board-view-container .board-column-content {
-  overscroll-behavior-y: contain;
+  overscroll-behavior-block: contain;
   /* What the gap is placed against, and what a card's `offsetTop` is then counted from. */
   position: relative;
   /* Pinned rather than left to stretch, a body that follows the column's width laying out every

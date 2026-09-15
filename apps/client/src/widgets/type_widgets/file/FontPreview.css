@@ -14,7 +14,7 @@
 
     .font-preview-offer {
         flex: 0 0 auto;
-        margin-left: auto;
+        margin-inline-start: auto;
     }
 
     .font-preview-specimen-input {

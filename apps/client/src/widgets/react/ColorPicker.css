@@ -65,8 +65,8 @@
     content: "\ed35";
     display: flex;
     top: 0;
-    left: 0;
-    right: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
     bottom: 0;
     font-size: calc(var(--color-picker-cell-size) * 1.3);
     justify-content: center;

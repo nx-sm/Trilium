@@ -126,7 +126,7 @@
         .note-content {
             flex-grow: 1;
             background: var(--main-background-color);
-            border-top-left-radius: 6px;
+            border-start-start-radius: 6px;
             margin: 0;
         }
     }
@@ -191,7 +191,7 @@
             padding-inline-start: 6px;
             background-color: var(--main-background-color);
             flex-grow: 1;
-            border-top-left-radius: 6px;
+            border-start-start-radius: 6px;
             display: flex;
             flex-direction: column;
             min-height: 0;

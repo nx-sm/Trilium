@@ -14,8 +14,8 @@ body.popup-editor-open .ck.ck-dialog-overlay.ck-dialog-behind-popup-editor { z-i
 
 body.desktop .modal.popup-editor-dialog .modal-dialog {
     max-width: 75vw;
-    border-bottom-left-radius: var(--bs-modal-border-radius);
-    border-bottom-right-radius: var(--bs-modal-border-radius);
+    border-end-start-radius: var(--bs-modal-border-radius);
+    border-end-end-radius: var(--bs-modal-border-radius);
 }
 
 body.desktop .modal.popup-editor-dialog .modal-dialog .modal-content {

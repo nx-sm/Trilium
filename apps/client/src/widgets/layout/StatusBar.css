@@ -151,7 +151,7 @@ body.experimental-feature-new-layout .note-info-content {
                     > span {
                         display: table-cell;
                         user-select: text;
-                        padding-left: 2em;
+                        padding-inline-start: 2em;
                     }
                 }
             }

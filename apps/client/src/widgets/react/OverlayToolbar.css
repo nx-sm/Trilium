@@ -15,7 +15,7 @@
     border-radius: var(--overlay-button-border-radius, 6px);
     /* Two edges rather than four, the light in this app coming from the top leading corner — the
        same lift a run of buttons is given (see OverlayControlGroup.css). */
-    border-right: 1px solid var(--overlay-button-shadow-color, var(--main-border-color, #0000002e));
+    border-inline-end: 1px solid var(--overlay-button-shadow-color, var(--main-border-color, #0000002e));
     border-bottom: 1px solid var(--overlay-button-shadow-color, var(--main-border-color, #0000002e));
     /* The frosting a menu is given, rather than a blur of this bar's own: the theme sets what glass
        looks like in the app (see shell.css in theme-next, the one theme that sets it), and a bar

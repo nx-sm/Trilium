@@ -328,8 +328,8 @@ div.ck.ck-collapsible {
 :root .ck.ck-color-selector .ck-color-grids-fragment .ck-button.ck-color-selector__color-picker {
     --ck-color-base-border: transparent; /* Remove the top border */
 
-    border-bottom-left-radius: var(--ck-border-radius);
-    border-bottom-right-radius: var(--ck-border-radius);
+    border-end-start-radius: var(--ck-border-radius);
+    border-end-end-radius: var(--ck-border-radius);
 }
 
 /* Current color checkmark */
@@ -863,7 +863,7 @@ html .note-detail-editable-text > :not(figure, .include-note, hr):first-child {
 }
 
 .ck-content a.reference-link small {
-    margin-left: 0.25em;
+    margin-inline-start: 0.25em;
     opacity: 0.5;
 
     >span {

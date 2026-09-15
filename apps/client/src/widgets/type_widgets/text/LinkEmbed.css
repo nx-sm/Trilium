@@ -90,7 +90,7 @@ body.light-theme .link-embed-favicon-light {
    it doesn't disturb the same favicon reused in the card's flex URL row. */
 .link-embed-mention > .link-embed-mention-favicon {
     vertical-align: -0.2em;
-    margin-right: 4px;
+    margin-inline-end: 4px;
 }
 
 .link-embed-mention-title {

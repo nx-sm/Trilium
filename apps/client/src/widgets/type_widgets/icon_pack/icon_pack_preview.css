@@ -73,7 +73,7 @@ body.interactive .ip-cell:hover {
 .ip-count {
     display: inline-block;
     position: absolute;
-    right: 0;
+    inset-inline-end: 0;
     bottom: 0;
     padding: 4px 8px;
     border-radius: 6px;
@@ -84,6 +84,6 @@ body.interactive .ip-cell:hover {
 
 body.interactive .ip-count {
     position: fixed;
-    right: 16px;
+    inset-inline-end: 16px;
     bottom: 8px;
 }

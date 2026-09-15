@@ -40,11 +40,11 @@
 
 .expandable-section-summary > .bx {
     font-size: 1rem;
-    margin-right: 0.15rem;
+    margin-inline-end: 0.15rem;
 }
 
 .expandable-section-chevron {
-    margin-left: auto;
+    margin-inline-start: auto;
     transition: transform 0.2s ease;
 }
 

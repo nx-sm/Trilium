@@ -1,7 +1,7 @@
 .bx-ul
 {
-    margin-left: 2em;
-    padding-left: 0;
+    margin-inline-start: 2em;
+    padding-inline-start: 0;
 
     list-style: none;
 }
@@ -15,7 +15,7 @@
     line-height: inherit;
 
     position: absolute;
-    left: -2em;
+    inset-inline-start: -2em;
 
     width: 2em;
 
@@ -438,12 +438,14 @@
 {
     float: left;
 
+    /* stylelint-disable-next-line property-layout-mappings -- paired with a physical float in a utility named for its side */
     margin-right: .3em!important;
 }
 .bx-pull-right
 {
     float: right;
 
+    /* stylelint-disable-next-line property-layout-mappings -- paired with a physical float in a utility named for its side */
     margin-left: .3em!important;
 }
 .bx-rotate-90

@@ -137,7 +137,7 @@ body.desktop .revisions-dialog {
             min-height: 2.5em;
 
             >div {
-                padding-left: 0.25em;
+                padding-inline-start: 0.25em;
                 min-width: 0;
             }
         }

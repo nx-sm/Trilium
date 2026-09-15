@@ -23,7 +23,7 @@
 }
 
 .branch-prefix-dialog .preview-list li .tn-icon {
-    margin-right: 6px;
+    margin-inline-end: 6px;
 }
 
 .branch-prefix-dialog .branch-prefix-current {

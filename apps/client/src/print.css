@@ -117,7 +117,7 @@ body[data-note-type="text"] .ck-content {
     .ck-content .todo-list__label__description::after {
         content: "";
         position: absolute;
-        left: 0;
+        inset-inline-start: 0;
         top: var(--box-vert-offset);
         width: var(--box-size);
         height: var(--box-size);
@@ -128,7 +128,7 @@ body[data-note-type="text"] .ck-content {
        on the li's first line, and indent the paragraph(s) to make room for it. */
     .ck-content .todo-list__label.todo-list__label_without-description {
         position: absolute;
-        left: 0;
+        inset-inline-start: 0;
         top: var(--box-vert-offset);
         width: var(--box-size);
         height: var(--box-size);
@@ -204,11 +204,11 @@ li.footnote-item {
 
 li.footnote-item::before {
     content: counter(footnote-counter) ". ";
-    margin-right: 0.25em;
+    margin-inline-end: 0.25em;
 }
 
 .ck-content .footnote-back-link {
-    margin-right: 0.25em;
+    margin-inline-end: 0.25em;
 }
 
 .ck-content .footnote-section {

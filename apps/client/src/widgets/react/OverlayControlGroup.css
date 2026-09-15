@@ -38,7 +38,7 @@
     border-radius: var(--_overlay-radius);
     /* Two edges rather than four, which is a shadow said in the cheapest way there is: a chip over
        content wants lifting off it, and the light in this app comes from the top leading corner. */
-    border-right: 1px solid var(--_overlay-edge);
+    border-inline-end: 1px solid var(--_overlay-edge);
     border-bottom: 1px solid var(--_overlay-edge);
 
     :where(button) {

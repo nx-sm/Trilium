@@ -9,6 +9,7 @@
 .mind-map-container .mind-map-overlay .mind-map-arrow-hint {
     position: absolute;
     top: var(--mind-map-inset-top);
+    /* stylelint-disable-next-line property-layout-mappings -- centred with translateX(), which does not flip in RTL */
     left: 50%;
     transform: translateX(-50%);
     padding: 6px 14px;

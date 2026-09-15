@@ -1,6 +1,6 @@
 .shortcut-hints-panel {
     position: fixed;
-    right: 1rem;
+    inset-inline-end: 1rem;
     bottom: 1rem;
     z-index: 1080;
     /* Grow to fit the widest shortcut row (so keys never wrap), capped to the viewport. */

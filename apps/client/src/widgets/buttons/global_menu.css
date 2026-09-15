@@ -61,7 +61,7 @@ button.global-menu-button {
     display: flex;
     width: 16px;
     height: 16px;
-    right: calc(0px - var(--update-badge-x-offset));
+    inset-inline-end: calc(0px - var(--update-badge-x-offset));
     bottom: calc(0px - var(--update-badge-y-offset));
     justify-content: center;
     align-items: center;

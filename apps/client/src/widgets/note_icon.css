@@ -88,8 +88,8 @@ body.experimental-feature-new-layout {
 
 body.mobile .modal.icon-switcher {
     .modal-dialog {
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         margin: unset;
         transform: unset;
         max-width: 100%;

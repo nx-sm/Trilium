@@ -95,14 +95,14 @@
   .maplibregl-ctrl-bottom-left .maplibregl-ctrl,
   .maplibregl-ctrl-bottom-right .maplibregl-ctrl {
     margin-bottom: var(--geo-map-inset-bottom);
-    margin-left: var(--geo-map-inset-left);
-    margin-right: var(--geo-map-inset-right);
+    margin-inline-start: var(--geo-map-inset-left);
+    margin-inline-end: var(--geo-map-inset-right);
   }
 
   .maplibregl-ctrl-top-left .maplibregl-ctrl {
     margin-top: var(--geo-map-inset-top);
-    margin-left: var(--geo-map-inset-left);
-    margin-right: var(--geo-map-inset-right);
+    margin-inline-start: var(--geo-map-inset-left);
+    margin-inline-end: var(--geo-map-inset-right);
   }
 }
 

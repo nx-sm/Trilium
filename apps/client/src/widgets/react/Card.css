@@ -364,17 +364,17 @@ body[dir=rtl] .tn-card-option::after {
 
     .tn-card-section {
         &:first-of-type {
-            border-top-left-radius: var(--card-border-radius);
-            border-top-right-radius: var(--card-border-radius);
+            border-start-start-radius: var(--card-border-radius);
+            border-start-end-radius: var(--card-border-radius);
         }
 
         &:last-of-type {
-            border-bottom-left-radius: var(--card-border-radius);
-            border-bottom-right-radius: var(--card-border-radius);
+            border-end-start-radius: var(--card-border-radius);
+            border-end-end-radius: var(--card-border-radius);
         }
 
         &.tn-card-section-nested {
-            padding-left: calc(var(--card-padding-inline) + var(--card-nested-section-indent) * var(--tn-card-section-nesting-level));
+            padding-inline-start: calc(var(--card-padding-inline) + var(--card-nested-section-indent) * var(--tn-card-section-nesting-level));
             background-color: color-mix(in srgb, var(--card-background-color) calc(100% / (var(--tn-card-section-nesting-level) + 1)) , transparent);
         }
     }

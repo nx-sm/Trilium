@@ -445,6 +445,7 @@ body.mobile .dropdown-menu {
 
     .dropdown-toggle::after {
         top: 0.5em;
+        /* stylelint-disable-next-line property-layout-mappings -- centred with translateX(), which does not flip in RTL */
         right: var(--dropdown-menu-padding-horizontal);
         transform: translateX(50%) rotate(90deg);
     }
@@ -466,16 +467,16 @@ body.mobile .dropdown-menu {
     .dropdown-divider + .dropdown-item,
     .dropdown-custom-item:first-of-type,
     .dropdown-divider + .dropdown-custom-item {
-        border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
+        border-start-start-radius: 6px;
+        border-start-end-radius: 6px;
     }
 
     .dropdown-item:last-of-type,
     .dropdown-item:has(+ .dropdown-divider),
     .dropdown-custom-item:last-of-type,
     .dropdown-custom-item:has(+ .dropdown-divider) {
-        border-bottom-left-radius: 6px;
-        border-bottom-right-radius: 6px;
+        border-end-start-radius: 6px;
+        border-end-end-radius: 6px;
         border-bottom: 0 !important;
     }
 

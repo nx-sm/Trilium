@@ -16,7 +16,7 @@
 .llm-chat-tool-call-count {
     font-weight: 400;
     color: var(--muted-text-color);
-    margin-left: 0.35rem;
+    margin-inline-start: 0.35rem;
 }
 
 /* Folded group — separate the first nested row from the group header. */
@@ -26,7 +26,7 @@
 
 .llm-chat-tool-call-note-ref {
     font-weight: 400;
-    margin-left: 0.25rem;
+    margin-inline-start: 0.25rem;
 }
 
 /* Section body (input + result) */
@@ -67,7 +67,7 @@
 
 .llm-chat-tool-call-table td {
     padding: 0.25rem 0;
-    padding-right: 0.75rem;
+    padding-inline-end: 0.75rem;
     vertical-align: top;
 }
 

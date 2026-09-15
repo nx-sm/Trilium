@@ -77,7 +77,7 @@
 
     .note-path {
         opacity: 0.5;
-        margin-left: 0;
+        margin-inline-start: 0;
         font-size: .85em;
         line-height: .85em;
         font-weight: 500;
@@ -412,7 +412,7 @@
         figcaption {
             display: block;
             position: sticky;
-            left: 0;
+            inset-inline-start: 0;
             width: 100%;
         }
     }

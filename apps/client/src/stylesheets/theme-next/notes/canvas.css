@@ -55,7 +55,7 @@
     position: absolute;
     content: "";
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     width: 100%;
     height: 100%;
     border-radius: inherit;
@@ -190,11 +190,11 @@
 }
 
 body[dir=ltr] .excalidraw .Island.App-menu__left {
-    right: 0;
+    inset-inline-end: 0;
 }
 
 body[dir=rtl] .excalidraw .Island.App-menu__left {
-    left: 0;
+    inset-inline-start: 0;
 }
 
 :root .App-menu__left > .panelColumn {
@@ -240,11 +240,11 @@ body[dir=ltr] .excalidraw .App-menu__left .buttonList .picker {
 /* Properties panel */
 
 body[dir=ltr] .excalidraw .exc-stats {
-    left: 0;
+    inset-inline-start: 0;
 }
 
 body[dir=rtl] .excalidraw .exc-stats {
-    right: 0;
+    inset-inline-end: 0;
 }
 
 /* Sidebar */

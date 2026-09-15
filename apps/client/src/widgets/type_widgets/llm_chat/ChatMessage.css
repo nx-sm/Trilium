@@ -19,7 +19,7 @@
 }
 
 .llm-chat-message-wrapper-user {
-    margin-left: auto;
+    margin-inline-start: auto;
     max-width: 70%;
     /* Shrink to fit the content (capped by max-width) instead of collapsing to
        min-content. Without an explicit width, an `auto` cross-axis margin inside
@@ -114,7 +114,7 @@ body.background-effects.theme-supports-background-effects .llm-chat-message-user
     width: 8px;
     height: 1.1em;
     background: currentColor;
-    margin-left: 2px;
+    margin-inline-start: 2px;
     vertical-align: text-bottom;
     animation: llm-chat-blink 1s infinite;
 }
@@ -204,7 +204,7 @@ body.background-effects.theme-supports-background-effects .llm-chat-message-user
     width: 100%;
     max-width: 100%;
     border-style: dashed;
-    margin-right: 0;
+    margin-inline-end: 0;
     margin: 0;
 }
 
@@ -256,7 +256,7 @@ body.background-effects.theme-supports-background-effects .llm-chat-message-user
 .llm-chat-markdown ul,
 .llm-chat-markdown ol {
     margin: 0.5em 0;
-    padding-left: 1.5em;
+    padding-inline-start: 1.5em;
 }
 
 .llm-chat-markdown li {
@@ -299,7 +299,7 @@ body.background-effects.theme-supports-background-effects .llm-chat-message-user
 .llm-chat-markdown blockquote {
     margin: 0.75em 0;
     padding: 0.5em 1em;
-    border-left: 3px solid var(--main-border-color);
+    border-inline-start: 3px solid var(--main-border-color);
     background: var(--accented-background-color);
 }
 
@@ -354,8 +354,8 @@ body.background-effects.theme-supports-background-effects .llm-chat-message-user
 .llm-chat-footer {
     position: absolute;
     bottom: 0;
-    left: 0;
-    right: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
     display: flex;
     align-items: center;
     gap: 0.375rem;

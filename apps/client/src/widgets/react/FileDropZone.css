@@ -82,6 +82,6 @@
 }
 
 .file-drop-zone-remove {
-    margin-left: auto;
+    margin-inline-start: auto;
     flex-shrink: 0;
 }

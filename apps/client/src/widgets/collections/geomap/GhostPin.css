@@ -8,7 +8,7 @@
   top: 0;
   /* `left` whatever the writing direction: the transform carries pixel offsets measured from the
      left edge, which is where MapLibre measures a point from. */
-  left: 0;
+  inset-inline-start: 0;
   /* Over the map and its control corners (2), under the toolbar and the detail pane (3): the
      ghost is part of the map's picture, not of the furniture standing over it. */
   z-index: 2;

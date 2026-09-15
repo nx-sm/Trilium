@@ -46,7 +46,7 @@ body.desktop .modal.options-dialog > .modal-dialog {
 body.desktop .modal.options-dialog > .modal-dialog > .modal-content > .modal-main > .modal-header {
     position: absolute;
     top: 0;
-    right: 4px;
+    inset-inline-end: 4px;
     z-index: 9999;
 }
 
@@ -68,7 +68,7 @@ body.mobile .modal.options-dialog > .modal-dialog > .modal-content-with-sidebar 
 body.mobile .modal.options-dialog > .modal-dialog > .modal-content-with-sidebar > .modal-sidebar {
     order: 0;
     height: auto;
-    border-right: 1px solid var(--main-border-color);
+    border-inline-end: 1px solid var(--main-border-color);
     border-bottom: none;
 }
 
@@ -102,8 +102,8 @@ body.mobile .modal.options-dialog.mobile-master-detail {
 
     .options-mobile-nav {
         padding-block: 8px;
-        padding-left: var(--options-pane-inset-left);
-        padding-right: var(--options-pane-inset-right);
+        padding-inline-start: var(--options-pane-inset-left);
+        padding-inline-end: var(--options-pane-inset-right);
 
         /* The list is the pane's own content here, not a menu standing over something else. */
         .dropdown-menu.static {
@@ -138,16 +138,16 @@ body.mobile .modal.options-dialog.mobile-master-detail {
     /* Held to the same margin whatever the page: its own is a desktop measure, and in the old
        layout it has none of its own at all. */
     .note-detail-content-widget-content.options {
-        padding-left: var(--options-pane-inset-left);
-        padding-right: var(--options-pane-inset-right);
+        padding-inline-start: var(--options-pane-inset-left);
+        padding-inline-end: var(--options-pane-inset-right);
     }
 
     /* The bar above the cards keeps their margin, so the way back starts on the rail the cards
        start on and the close button ends on the one they end on. `!important` answers the global
        rule, which is in `rem` besides and would drift from a fixed inset as the text is resized. */
     .modal-header {
-        padding-left: var(--options-inset-left) !important;
-        padding-right: var(--options-inset-right) !important;
+        padding-inline-start: var(--options-inset-left) !important;
+        padding-inline-end: var(--options-inset-right) !important;
     }
 
     /* Reaches both edges of the pane, its border with it, and takes the inset back as padding so
@@ -155,10 +155,10 @@ body.mobile .modal.options-dialog.mobile-master-detail {
        one bar standing at the top of the page wants one gap over its contents, not two. */
     .options-page-header {
         margin-top: calc(var(--default-padding, 15px) * -1);
-        margin-left: calc(var(--options-pane-inset-left) * -1);
-        margin-right: calc(var(--options-pane-inset-right) * -1);
-        padding-left: var(--options-pane-inset-left);
-        padding-right: var(--options-pane-inset-right);
+        margin-inline-start: calc(var(--options-pane-inset-left) * -1);
+        margin-inline-end: calc(var(--options-pane-inset-right) * -1);
+        padding-inline-start: var(--options-pane-inset-left);
+        padding-inline-end: var(--options-pane-inset-right);
     }
 
     /* Left to scroll away with the list beneath it, as a phone's search fields do. */

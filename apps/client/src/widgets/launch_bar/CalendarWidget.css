@@ -187,6 +187,7 @@
 }
 
 .calendar-dropdown-widget .calendar-month-selector .dropdown-menu {
+    /* stylelint-disable-next-line property-layout-mappings -- centred with translateX(), which does not flip in RTL */
     left: 50%;
     transform: translateX(-50%);
 }
