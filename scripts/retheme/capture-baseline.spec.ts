@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { buildCaptureMatrix, COLOR_SCHEMES, SURFACES, VIEWPORTS } from "./capture-baseline.mjs";
+import { buildCaptureMatrix, COLOR_SCHEMES, parseOptionArgs, SURFACES, VIEWPORTS } from "./capture-baseline.mjs";
 
 describe("buildCaptureMatrix", () => {
     it("runs every layout at each of its widths in both colour schemes, with only that layout's surfaces", () => {
@@ -29,5 +29,17 @@ describe("buildCaptureMatrix", () => {
     it("names every surface uniquely, so no capture overwrites another", () => {
         const ids = SURFACES.map((surface) => surface.id);
         expect(new Set(ids).size).toBe(ids.length);
+    });
+});
+
+describe("parseOptionArgs", () => {
+    it("splits each pair at its first equals sign and rejects a pair without a key", () => {
+        expect(parseOptionArgs([ "theme=lumen", "codeNoteThemeLight=default:lumen-light", "note=a=b" ])).toEqual({
+            theme: "lumen",
+            codeNoteThemeLight: "default:lumen-light",
+            note: "a=b"
+        });
+        expect(() => parseOptionArgs([ "theme" ])).toThrow("Expected --option key=value");
+        expect(() => parseOptionArgs([ "=lumen" ])).toThrow("Expected --option key=value");
     });
 });

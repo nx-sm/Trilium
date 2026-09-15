@@ -1,0 +1,29 @@
+/*
+ * Relation map (jsPlumb). `RelationMap.css` pins greys that follow no theme. Only colours, radii and
+ * shadows change here: border widths, padding and the note boxes' `position: absolute !important`
+ * are what jsPlumb anchors connections to.
+ */
+
+html:root .note-detail-relation-map .note-box {
+    border-color: var(--border-default);
+    border-radius: var(--radius-surface);
+    box-shadow: var(--shadow-floating);
+}
+
+html:root .note-detail-relation-map .connection-label {
+    border-color: var(--border-default);
+    border-radius: var(--radius-control);
+}
+
+html:root .note-detail-relation-map .endpoint {
+    background-color: var(--text-secondary);
+    box-shadow: 0 0 2px var(--shadow-color);
+}
+
+html:root .note-detail-relation-map .endpoint:hover {
+    box-shadow: 0 0 6px var(--shadow-color);
+}
+
+html:root .note-detail-relation-map .dragHover {
+    border-color: var(--accent-default);
+}

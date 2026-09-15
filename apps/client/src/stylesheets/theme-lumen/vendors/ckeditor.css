@@ -1,0 +1,32 @@
+/*
+ * CKEditor 5. `ckeditor-theme.css` builds the `--ck-color-*` palette from Trilium's variables on
+ * `body`, so most of it already follows the aliases; this file covers the values it pins itself.
+ * Only colours and radii change: balloon offsets and toolbar layout are CKEditor's to measure.
+ */
+
+html:root body {
+    --ck-color-base-active: var(--accent-default);
+    --ck-color-base-active-focus: var(--accent-hover);
+    --ck-color-focus-border: var(--focus-ring-color);
+    --ck-color-focus-outer-shadow: var(--accent-subtle);
+    --ck-color-button-save: var(--state-success);
+    --ck-color-button-cancel: var(--state-danger);
+    --ck-border-radius: var(--radius-small);
+}
+
+html:root div.ck.ck-dialog {
+    border-radius: var(--radius-surface);
+    box-shadow: var(--shadow-overlay);
+}
+
+html:root .ck.ck-balloon-panel:not(.ck-tooltip) {
+    --ck-rounded-corners-radius: var(--radius-surface);
+}
+
+html:root .ck.ck-block-toolbar-button {
+    --ck-border-radius: var(--radius-control);
+}
+
+html:root .ck.ck-editor__editable pre[data-language]::after {
+    --ck-color-code-block-label-background: color-mix(in srgb, var(--text-tertiary) 50%, transparent);
+}

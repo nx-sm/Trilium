@@ -96,6 +96,25 @@ Each file changes only colour, radius, shadow and motion, within the limits of
 The tree focus ring marks the focused row when it is not the active one, which happens during
 keyboard multi-selection; it is an inset outline because the row clips anything outside it.
 
+## Vendor layer
+
+`stylesheets/theme-lumen/vendors/` covers third-party libraries (TDD Phase 3), one file per library,
+with the same `html:root` lift and the same limit to colour, radius, shadow, weight and motion.
+
+| File | Library | Changes | Left alone |
+| --- | --- | --- | --- |
+| `ckeditor.css` | CKEditor 5 | Active and focus colours (the focus border was the grey `--main-border-color`, so focus rings in editor dialogs and balloons were hard to see), save and cancel buttons, dialog, balloon and block-toolbar radii, dialog shadow, code block label | Balloon offsets and arrow geometry; toolbar layout and wrapping, which CKEditor measures |
+| `tabulator.css` | Tabulator | Header text colour and weight, row delimiter, header filter radius, menu text size | Cell padding and row and header heights, which Tabulator measures for virtual rendering |
+| `relation-map.css` | jsPlumb relation map | Note box and label borders, radii and shadows; endpoint and drag-hover colours, which `RelationMap.css` pinned to greys | Border widths, padding and `position: absolute !important`, which connections anchor to |
+| `excalidraw.css` | Excalidraw | Its accent variables, for light and dark at once | The canvas, which Excalidraw draws from its `theme` prop |
+
+Most of each library's palette already follows Lumen without a rule here: `ckeditor-theme.css` and
+`table.css` build theirs from Trilium's variables, which the aliases restyle. Canvas-rendered surfaces
+stay partly themed, as the TDD accepts: Mind Elixir reads `--main-background-color`, and jsPlumb
+connections, force-graph and MapLibre tiles draw their own colours.
+
+The e2e fixture has no canvas note, so `excalidraw.css` is checked by stylelint but not by a screenshot.
+
 ## Guards
 
 | Guard | What it enforces | Run |

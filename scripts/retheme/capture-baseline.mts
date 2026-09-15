@@ -8,8 +8,10 @@
  *
  * Usage: node scripts/retheme/capture-baseline.mts [--label baseline] [--channel msedge]
  *            [--base-url http://127.0.0.1:37999] [--only text-note,options-appearance] [--theme lumen]
+ *            [--option codeNoteThemeLight=default:lumen-light]…
  *
- * `--theme` sets the `theme` option for the run and restores the previous value afterwards.
+ * `--option` sets an option for the run and restores its previous value afterwards; `--theme lumen` is
+ * short for `--option theme=lumen`.
  */
 
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -50,7 +52,7 @@ export interface CaptureRun {
 interface Manifest {
     label: string;
     baseUrl: string;
-    theme?: string;
+    options: Record<string, string>;
     captured: string[];
     warnings: string[];
     failed: { file: string; error: string }[];
@@ -97,26 +99,28 @@ export async function main() {
             "channel": { type: "string" },
             "only": { type: "string" },
             "out": { type: "string", default: "test-output/retheme" },
-            "theme": { type: "string" }
+            "theme": { type: "string" },
+            "option": { type: "string", multiple: true }
         }
     });
     const label = values.label ?? "baseline";
     const baseUrl = values["base-url"] ?? "http://127.0.0.1:37999";
     const outputRoot = resolve(ROOT, values.out ?? "test-output/retheme", label);
     const runs = buildCaptureMatrix(SURFACES, values.only?.split(","));
-    const manifest: Manifest = { label, baseUrl, theme: values.theme, captured: [], warnings: [], failed: [] };
+    const options = { ...parseOptionArgs(values.option ?? []), ...(values.theme ? { theme: values.theme } : {}) };
+    const manifest: Manifest = { label, baseUrl, options, captured: [], warnings: [], failed: [] };
 
     const browser = await chromium.launch({ channel: values.channel });
     try {
-        const previousTheme = values.theme ? await setThemeOption(browser, baseUrl, values.theme) : undefined;
+        const previous = Object.keys(options).length > 0 ? await setOptions(browser, baseUrl, options) : {};
         try {
             for (const run of runs) {
                 console.log(`${run.directory}: ${run.surfaces.length} surfaces`);
                 await captureRun(browser, run, baseUrl, outputRoot, manifest);
             }
         } finally {
-            if (previousTheme) {
-                await setThemeOption(browser, baseUrl, previousTheme);
+            if (Object.keys(previous).length > 0) {
+                await setOptions(browser, baseUrl, previous);
             }
         }
     } finally {
@@ -147,6 +151,19 @@ export function buildCaptureMatrix(surfaces: Surface[], only?: string[]): Captur
         }
     }
     return runs;
+}
+
+/** Parses `--option key=value` arguments; the value can itself contain `=`. */
+export function parseOptionArgs(pairs: string[]): Record<string, string> {
+    const options: Record<string, string> = {};
+    for (const pair of pairs) {
+        const separator = pair.indexOf("=");
+        if (separator <= 0) {
+            throw new Error(`Expected --option key=value, got "${pair}"`);
+        }
+        options[pair.slice(0, separator)] = pair.slice(separator + 1);
+    }
+    return options;
 }
 
 async function captureRun(browser: Browser, run: CaptureRun, baseUrl: string, outputRoot: string, manifest: Manifest) {
@@ -201,7 +218,9 @@ async function showSurface(page: Page, surface: Surface) {
         }, surface.notePath);
         // Collections render through `.note-list-widget` (the board through `.board-view`) rather than
         // a printable note detail.
-        rendered = await page.locator(".note-detail-printable.visible, .note-list-widget, .board-view").first()
+        rendered = await page.locator(".note-detail-printable.visible, .note-list-widget, .board-view")
+            .filter({ visible: true })
+            .first()
             .waitFor({ state: "visible", timeout: 15_000 })
             .then(() => true, () => false);
         await page.waitForLoadState("networkidle");
@@ -225,24 +244,28 @@ async function showSurface(page: Page, surface: Surface) {
     return rendered;
 }
 
-/** Saves the `theme` option through the page, as the e2e `setOption` helper does, and resolves to the previous value. */
-async function setThemeOption(browser: Browser, baseUrl: string, theme: string) {
+/** Saves options through the page, as the e2e `setOption` helper does, and resolves to their previous values. */
+async function setOptions(browser: Browser, baseUrl: string, options: Record<string, string>) {
     const context = await browser.newContext();
     try {
         const page = await context.newPage();
         await loadApp(page, baseUrl);
-        return await page.evaluate(async (value) => {
-            const glob = (globalThis as unknown as GlobWindow).glob;
-            const previous = glob?.theme ?? "next";
-            const response = await fetch(`api/options/theme/${encodeURIComponent(value)}`, {
-                method: "PUT",
-                headers: { "x-csrf-token": glob?.csrfToken ?? "" }
-            });
-            if (!response.ok) {
-                throw new Error(`Saving the theme option failed with ${response.status}`);
+        return await page.evaluate(async (entries) => {
+            const headers = { "x-csrf-token": (globalThis as unknown as GlobWindow).glob?.csrfToken ?? "" };
+            const current = await (await fetch("api/options", { headers })).json() as Record<string, string>;
+            const previous: Record<string, string> = {};
+            for (const [ key, value ] of Object.entries(entries)) {
+                previous[key] = current[key] ?? "";
+                const response = await fetch(`api/options/${encodeURIComponent(key)}/${encodeURIComponent(value)}`, {
+                    method: "PUT",
+                    headers
+                });
+                if (!response.ok) {
+                    throw new Error(`Saving the ${key} option failed with ${response.status}`);
+                }
             }
             return previous;
-        }, theme);
+        }, options);
     } finally {
         await context.close();
     }
@@ -288,7 +311,6 @@ function firstLine(error: unknown) {
  */
 interface GlobWindow {
     glob?: {
-        theme?: string;
         csrfToken?: string;
         appContext: {
             triggerCommand(name: string, data?: Record<string, unknown>): Promise<unknown>;

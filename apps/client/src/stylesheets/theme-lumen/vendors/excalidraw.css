@@ -1,0 +1,17 @@
+/*
+ * Excalidraw. Its accent variables are declared for light on `.excalidraw` and for dark on
+ * `.excalidraw.theme--dark`; Lumen's tokens already switch with the colour scheme, so one rule covers
+ * both. The canvas is drawn by Excalidraw from its `theme` prop, which `Canvas.tsx` sets.
+ */
+
+html:root .excalidraw {
+    --color-primary: var(--accent-default);
+    --color-primary-hover: var(--accent-hover);
+    --color-primary-darker: var(--accent-hover);
+    --color-primary-darkest: var(--accent-active);
+    --color-primary-light: var(--accent-subtle);
+    --color-primary-light-darker: color-mix(in srgb, var(--accent-default) 30%, transparent);
+    --color-brand-hover: var(--accent-hover);
+    --color-brand-active: var(--accent-active);
+    --border-radius-lg: var(--radius-control);
+}

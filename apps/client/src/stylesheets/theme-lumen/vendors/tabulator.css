@@ -1,0 +1,21 @@
+/*
+ * Tabulator (table collections, the SQL console). Tabulator measures row and header heights for
+ * virtual rendering, so cell padding stays `table.css`'s; only colour, weight and radii change.
+ */
+
+html:root .tabulator {
+    --col-header-text-color: var(--text-secondary);
+    --row-delimiter-color: var(--border-subtle);
+}
+
+html:root .tabulator div.tabulator-header {
+    font-weight: var(--font-weight-medium);
+}
+
+html:root .tabulator div.tabulator-header .tabulator-col-content .tabulator-header-filter input {
+    border-radius: var(--radius-small);
+}
+
+html:root .tabulator-menu .tabulator-menu-item {
+    font-size: var(--text-size-ui);
+}

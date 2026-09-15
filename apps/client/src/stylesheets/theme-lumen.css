@@ -13,3 +13,8 @@
 @import url(./theme-lumen/chrome/tree.css);
 @import url(./theme-lumen/chrome/menus.css);
 @import url(./theme-lumen/chrome/feedback.css);
+
+@import url(./theme-lumen/vendors/ckeditor.css);
+@import url(./theme-lumen/vendors/tabulator.css);
+@import url(./theme-lumen/vendors/relation-map.css);
+@import url(./theme-lumen/vendors/excalidraw.css);
