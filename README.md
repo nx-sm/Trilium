@@ -230,7 +230,7 @@ Please view the [documentation guide](https://github.com/TriliumNext/Trilium/blo
 * [nriver](https://github.com/nriver) for his work on internationalization.
 * [Thomas Frei](https://github.com/thfrei) for his original work on the Canvas.
 * [antoniotejada](https://github.com/nriver) for the original syntax highlight widget.
-* [Tabler Icons](https://tabler.io/icons) for the system tray icons.
+* [Tabler Icons](https://tabler.io/icons) for the system tray icons and the Lumen theme's interface icons.
 *   The application icons in the import dialog are from:
     *   [Material Design Icons](https://pictogrammers.com/library/mdi/) for OneNote, Google Keep, Evernote.
     *   [Font Awesome](https://fontawesome.com/) for Notion, Obsidian.

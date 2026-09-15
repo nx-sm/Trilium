@@ -34,13 +34,11 @@ set icons), `packages/commons/src`, `packages/ckeditor5/src`. Specs, `boxicons-c
   (regular/fill). **There is no Tabler provider** (no Tabler reference anywhere in the builder), but
   `providers/mdi.ts` and `providers/phosphor.ts` are ~50-line templates, so a `tabler.ts` reading
   `@tabler/icons-webfont` would be small. `utils.ts` `extractClassNamesFromCss()` expects
-  `.x::before { content: "\hex" }`; Tabler's webfont CSS might use the single-colon `:before` form,
-  which would need a regex tweak (not checked — the package is not installed).
-- **Tabler in `node_modules`:** none. No `@tabler/*` package exists (root `node_modules` symlinks into a
-  global pnpm store; searched every linked package). `@excalidraw/excalidraw` bundles a few Tabler paths,
-  but only as a `tablerCheckIcon` identifier, not a name list. **Tabler names below are therefore
-  unverified**, except six confirmed by local files: `plus`, `x`, `history`, `bookmark`,
-  `calendar-star` (classes `icon-tabler-*` in `scripts/icons/tray/*.svg`) and `check` (Excalidraw).
+  `.x::before { content: "\hex" }`, and Tabler's webfont CSS uses the single-colon `:before` form, so
+  that regex needs a tweak.
+- **Tabler in `node_modules`:** none, and Tabler Icons is not a dependency. Every Tabler name below is
+  verified against the class list of `@tabler/icons-webfont` 3.46.0, which
+  `scripts/retheme/build-lumen-icons.mts` reads from an unpacked copy of the release.
 
 ### Places a class swap alone will not reach
 
@@ -75,6 +73,10 @@ subsetted, locally bundled Tabler webfont registered as a second built-in pack (
 sites migrated from this inventory and a migration for hidden-subtree icons. Boxicons (`bx`) stays for
 user-chosen note icons and scripts. Revisit C only if the theme needs per-state stroke weights a font
 cannot express.
+
+**Status:** path B runs as a preview in the Lumen theme ([Tokens](../Tokens.md#icons)). It remaps by
+codepoint rather than by class, through a font placed in front of Boxicons, so it also reaches the
+hard-coded codepoint rules above. Path A has not started.
 
 ## 3. Inventory
 
@@ -301,7 +303,7 @@ instances. Several Boxicons names collapse onto one Tabler name (`bx-search`/`bx
 | `bx-exit` | 2 | `apps/client/src/widgets/type_widgets/file/Video.tsx:332`<br>`apps/client/src/widgets/type_widgets/mind_map/MapToolbar.tsx:53` | `logout` | exact |  |
 | `bx-exit-fullscreen` | 2 | `apps/client/src/widgets/react/OverlayControlGroup.tsx:172`<br>`apps/client/src/widgets/type_widgets/file/Video.tsx:351` | `minimize` | exact |  |
 | `bx-expand` | 2 | `apps/client/src/menus/tree_context_menu.ts:224`<br>`apps/client/src/widgets/type_widgets/file/Video.tsx:289` | `arrows-maximize` | exact |  |
-| `bx-expand-vertical` | 2 | `apps/client/src/widgets/ribbon/NoteMapTab.tsx:34`<br>`apps/client/src/widgets/type_widgets/text/ai_assistant_stream.ts:226` | `unfold` | exact |  |
+| `bx-expand-vertical` | 2 | `apps/client/src/widgets/ribbon/NoteMapTab.tsx:34`<br>`apps/client/src/widgets/type_widgets/text/ai_assistant_stream.ts:226` | `arrows-vertical` | close | Tabler has no `unfold` |
 | `bx-first-aid` | 2 | `apps/client/src/widgets/collections/geomap/osm_icons.ts:71`<br>`apps/client/src/widgets/collections/geomap/osm_icons.ts:170` | `first-aid-kit` | exact |  |
 | `bx-horizontal-right` | 2 | `apps/client/src/widgets/collections/board/context_menu.ts:323`<br>`apps/client/src/widgets/collections/table/context_menu.ts:102` | `arrow-bar-right` | close |  |
 | `bx-layout` | 2 | `apps/client/src/menus/launcher_button_context_menu.ts:144`<br>`packages/trilium-core/src/services/hidden_subtree.ts:316` | `layout` | exact |  |
@@ -494,14 +496,14 @@ instances. Several Boxicons names collapse onto one Tabler name (`bx-search`/`bx
 
 | grade | distinct names | occurrences |
 |---|---:|---:|
-| exact | 237 | 1269 |
-| close | 142 | 394 |
+| exact | 236 | 1267 |
+| close | 143 | 396 |
 | weak | 8 | 15 |
 | none | 3 | 4 |
 | utility | 8 | 68 |
 | **total** | **398** | **1750** |
 
-Verified against a local Tabler name list: 6 rows (plus, x, check, history, bookmark, calendar-star); all others unverified.
+Verified against the class list of `@tabler/icons-webfont` 3.46.0: all 390 Tabler names.
 
 ### `none` icons
 - `bxl-java` (2) — no Java logo in Tabler; generic code-file fallback

@@ -130,17 +130,53 @@ variable for the editor chrome, and for syntax colours the same palette as a lit
 `lumen-contrast.spec.ts` checks that those literals equal the `--code-*` tokens in both schemes, and that
 every syntax colour reaches 4.5:1 on the editor background.
 
+## Icons
+
+Lumen draws most interface icons from [Tabler Icons](https://tabler.io/icons) while the app still asks
+for Boxicons. This is path B of the [icon inventory](inventory/icons.md#2-adoption-paths-for-tabler): a
+preview of the look that changes no call site, class name or stored icon.
+
+`scripts/retheme/build-lumen-icons.mts` writes two files from the inventory and the Tabler webfont
+release it pins:
+
+| File | Content |
+| --- | --- |
+| `fonts/tabler/tabler-icons-lumen.woff` | The Tabler glyphs of every `exact`, `close` and `weak` inventory row: 333 glyphs for 385 Boxicons glyphs, 71 KB. Each sits at the codepoint of the Boxicons glyph it replaces, moved so that its ink centres where Boxicons draws. |
+| `stylesheets/theme-lumen/icons/tabler.css` | An `@font-face` whose `unicode-range` covers only those codepoints, and `font-family` lists that put it in front of Boxicons: on `.bx`, and on each of the 22 client and editor stylesheet rules that name the Boxicons font themselves (tree chevrons, admonitions, dialog close buttons, …). |
+
+Every glyph the font does not hold still comes from Boxicons, and so do icons from other icon packs. The
+font needs a family of its own: the icon pack `<style>` is added after the theme stylesheets
+(`index.ts`), and among faces of one family the browser tries the last one defined first.
+
+Because the remap follows codepoints, not call sites:
+
+- a note whose icon is a remapped Boxicons name shows the Tabler glyph under Lumen, in the tree and in
+  the icon picker alike, while other note icons keep Boxicons;
+- custom task states keep their Boxicons glyph, because `task_states.ts` generates their rules per
+  state;
+- `bx-alert` and `bx-inbox`, which are not Boxicons 2 names, still render nothing;
+- share pages and exports do not load Lumen and keep Boxicons.
+
+Tabler Icons is not a dependency. Rebuild after changing the inventory, or when a stylesheet gains a
+rule that names the Boxicons font, from an unpacked copy of the pinned release:
+
+```bash
+npm pack @tabler/icons-webfont@3.46.0 && tar -xzf tabler-icons-webfont-3.46.0.tgz
+node scripts/retheme/build-lumen-icons.mts --tabler package
+```
+
 ## Standalone theme
 
 The TDD's first rollout step ships Lumen as a user theme, adoptable without a fork. A user theme is
-served from a note download URL, where the relative imports of `theme-lumen.css` cannot resolve, so
-`scripts/retheme/bundle-lumen.mts` inlines them into one file:
+served from a note download URL, where the relative imports and font URL of `theme-lumen.css` cannot
+resolve, so `scripts/retheme/bundle-lumen.mts` inlines the imports and embeds the icon font as a data URL:
 
 ```bash
 node scripts/retheme/bundle-lumen.mts
 ```
 
-It writes `dist/retheme/lumen-theme.css` (gitignored; about 8 KB gzipped) with an AGPL header and the
+It writes `dist/retheme/lumen-theme.css` (gitignored; about 83 KB gzipped, 73 KB of it the icon font) with
+an AGPL header, the Tabler Icons licence notice and the
 install steps: a CSS code note with the bundle as content, labelled `#appTheme=lumen-standalone` and
 `#appThemeBase=next`, chosen under Settings → Appearance. The label value is not `lumen`, which this
 repository already uses as a built-in theme ID and would take precedence.
@@ -156,6 +192,7 @@ theme; the Lumen editor theme exists only where `packages/codemirror` ships it.
 | --- | --- | --- |
 | `scripts/retheme/lumen-contract.spec.ts` | Every contract variable aliased or kept; aliases at `html:root` and only on semantic tokens; semantic tokens only on primitives; identical dark tiers | `pnpm exec vitest run --project scripts scripts/retheme` |
 | `scripts/retheme/lumen-contrast.spec.ts` | WCAG AA in light and dark: 4.5:1 for text pairs and syntax colours (translucent fills composited over their surface), 3:1 for focus rings and strong borders; the code editor's fallback palette equals the `--code-*` tokens | same |
+| `scripts/retheme/build-lumen-icons.spec.ts` | The icon font draws exactly the Boxicons codepoints the inventory remaps, centred like Boxicons, and its face covers only those; the icon stylesheet covers every stylesheet rule that names the Boxicons font | `pnpm exec vitest run --project scripts scripts/retheme` |
 | `trilium/token-values` (`scripts/stylelint/token-values.mts`) | No raw colour, font size or spacing in `stylesheets/theme-lumen/**` outside the primitives | `pnpm --filter client stylelint` |
 
 ## Screenshots

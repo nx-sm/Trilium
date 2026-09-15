@@ -9,7 +9,7 @@ plainly, what was not. Screenshots live in the gitignored `test-output/retheme/<
 
 | Check | Result |
 | --- | --- |
-| CSS bundle growth, budget +50 KB gzipped | All Lumen stylesheets together are 7.8 KB gzipped; the standalone bundle is 7.9 KB. |
+| CSS bundle growth, budget +50 KB gzipped | All Lumen stylesheets together are 10.1 KB gzipped, 2 KB of it the icon rules. The Tabler icon font is a separate 71 KB file that loads only while Lumen is active (Boxicons' font is 116 KB). The standalone bundle embeds that font as a data URL and is 83 KB gzipped, **over the budget**: the font accounts for about 73 KB of it. |
 | `prefers-reduced-motion` on every transition | Lumen's transitions read `--motion-duration-*`, which drop to 0.01ms under reduced motion, so a `transitionend` that JS awaits still fires. A scan of the Lumen chrome and vendor stylesheets finds no literal duration. |
 | No `box-shadow` or `filter` on repeated tree rows | The tree's active pill drops its shadow; no rule adds one to rows. |
 | Tree usable at 100,000 notes | **Not measured.** Lumen changes no row geometry, but tree scroll was not profiled. |
