@@ -75,11 +75,37 @@ width in light and dark (58 shots per set, each set against a freshly started fi
 Found in passing, and present before the conversion: in Arabic at the 768 px mobile layout, the settings
 sheet runs past the left edge of the viewport, while in English it fits.
 
+## Interaction regression checklist (§6.3)
+
+`packages/trilium-e2e/src/theme_lumen.spec.ts` drives most of the checklist with Lumen active. It
+lives in the shared suite, so both e2e projects run it: `pnpm --filter server e2e` and
+`pnpm --filter standalone e2e`, six tests each. Every test switches the theme to Lumen, waits for its
+stylesheet, exercises the interaction and restores the theme.
+
+| Checklist item | Covered |
+| --- | --- |
+| Tree: expand and collapse, multi-select, drag reordering | This spec, under Lumen |
+| Tree: hoisting | `layout/tree.spec.ts`, under the default theme |
+| Tab bar: open and close | This spec, under Lumen |
+| Tab bar: reorder, split view | `layout/tab_bar.spec.ts` and `layout/split_pane.spec.ts`, under the default theme |
+| Context menus at viewport edges | This spec: opened against the bottom edge, it stays inside the viewport and still closes on a click outside |
+| CKEditor toolbar overflow at narrow widths | This spec: the classic toolbar at 800 px stays inside its bar, and its overflow group opens inside the viewport |
+| Collection view switching (table → calendar → board) | This spec, under Lumen |
+| Mind Elixir pointer input | This spec: a node opens its panel |
+| `F1` in-app help | `help.spec.ts`, under the default theme |
+| Other keyboard shortcuts | **Not covered.** |
+| Protected note entry and timeout | **Not covered.** The e2e fixture's password is unknown by design (`generate-protected-fixture.mts`). |
+| Excalidraw pointer input | **Not covered.** The fixture holds no canvas note. |
+
+Found while writing the spec: the tree's context menu is around 600 px tall, so in a viewport shorter
+than that it opens above the top edge and its first items cannot be reached (measured at 520 px, where
+its top sat at −5 px). Observed under Lumen; not checked under another theme, though no Lumen rule
+changes the menu's size.
+
 ## Not verified
 
 - Electron on Windows, macOS and Linux, and Firefox: every capture ran in Microsoft Edge (Chromium).
 - Real mobile devices: mobile widths were emulated in the browser.
 - Third-party themes loaded alongside Lumen: none was installed.
-- The interaction regression checklist (§6.3): tree drag-and-drop, multi-select, hoisting, tab reorder
-  and split view, keyboard shortcuts, protected sessions, menus at viewport edges, CKEditor toolbar
-  overflow, collection view switching, and Excalidraw and Mind Elixir pointer input. It needs a person.
+- The parts of the interaction checklist (§6.3) that no test drives: protected note entry and timeout,
+  Excalidraw pointer input, and keyboard shortcuts other than `F1`. They need a person.
