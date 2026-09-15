@@ -1,0 +1,33 @@
+/*
+ * Note tree. Row height, vertical padding and border width feed FancyTree's drop zones, and
+ * `ul.fancytree-container li` has `contain: layout paint`, so every treatment stays inside the row:
+ * the active pill is Next's absolutely positioned `::before`, restyled.
+ */
+
+html:root :is(#left-pane, .tree-popup-sidebar) span.fancytree-node {
+    border-radius: var(--radius-control);
+}
+
+html:root :is(#left-pane, .tree-popup-sidebar) span.fancytree-node.fancytree-active::before {
+    border-inline-start: 3px solid var(--custom-color, var(--accent-default));
+    border-radius: var(--radius-control);
+    animation-duration: var(--motion-duration-base);
+}
+
+/* The focused row differs from the active one during keyboard multi-selection. The outline is inset
+   because the row's `li` clips anything drawn outside it. */
+html:root :is(#left-pane, .tree-popup-sidebar) ul.fancytree-container.fancytree-treefocus span.fancytree-node.fancytree-focused:not(.fancytree-active) {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: calc(0px - var(--focus-ring-width));
+}
+
+html:root :is(#left-pane, .tree-popup-sidebar) .tree-actions:hover {
+    border-color: var(--border-subtle);
+    box-shadow: var(--shadow-floating);
+}
+
+html:root :is(#left-pane, .tree-popup-sidebar) .tree-settings-popup {
+    border-color: var(--border-subtle);
+    border-radius: var(--radius-surface);
+    box-shadow: var(--shadow-overlay);
+}

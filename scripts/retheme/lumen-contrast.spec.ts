@@ -38,7 +38,8 @@ describe("Lumen contrast", () => {
         [ "--text-on-accent", "--accent-default" ],
         [ "--text-on-accent", "--state-danger" ],
         [ "--text-on-accent", "--state-success" ],
-        [ "--text-inverse", "--surface-inverse" ]
+        [ "--text-inverse", "--surface-inverse" ],
+        [ "--text-on-emphasis", "--surface-emphasis" ]
     ];
 
     /** Text drawn on a translucent fill, which sits on a surface: [text, fill, surface]. */

@@ -1,0 +1,16 @@
+/*
+ * Launcher buttons. The pane width and the button margins stay Next's: `resizer.ts` measures the
+ * vertical pane's outer width once for the left-pane split.
+ */
+
+html:root #launcher-pane .launcher-button {
+    border-radius: var(--radius-control);
+    transition:
+        background-color var(--motion-duration-base) var(--motion-ease),
+        color var(--motion-duration-base) var(--motion-ease);
+}
+
+html:root #launcher-pane .launcher-button:hover,
+html:root #launcher-pane .launcher-button.right-dropdown-button.show {
+    transition-duration: var(--motion-duration-fast);
+}

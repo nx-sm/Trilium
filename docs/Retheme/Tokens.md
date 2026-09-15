@@ -34,8 +34,8 @@ Component CSS reads **semantic tokens only** — never a primitive, never a raw 
 
 | Group | Tokens | Use |
 | --- | --- | --- |
-| Surfaces | `--surface-sunken`, `--surface-base`, `--surface-subtle`, `--surface-accented`, `--surface-raised`, `--surface-overlay`, `--surface-inverse` | App chrome, note content, insets, emphasised fills, cards, menus and dialogs, tooltips and toasts. In dark mode each step up is lighter. |
-| Text | `--text-primary`, `--text-secondary`, `--text-tertiary`, `--text-inverse`, `--text-on-accent` | Body, supporting, muted text; text on inverse surfaces; text on accent, danger or success fills. |
+| Surfaces | `--surface-sunken`, `--surface-base`, `--surface-subtle`, `--surface-accented`, `--surface-raised`, `--surface-overlay`, `--surface-inverse`, `--surface-emphasis` | App chrome, note content, insets, emphasised fills, cards, menus and dialogs, tooltips and toasts, solid chips such as the note icon. In dark mode each step up is lighter. |
+| Text | `--text-primary`, `--text-secondary`, `--text-tertiary`, `--text-inverse`, `--text-on-accent`, `--text-on-emphasis` | Body, supporting, muted text; text on inverse surfaces; text on accent, danger or success fills; text on `--surface-emphasis`. |
 | Borders | `--border-subtle`, `--border-default`, `--border-strong` | Separators; control outlines; outlines that must reach 3:1. |
 | Accent | `--accent-default`, `--accent-hover`, `--accent-active`, `--accent-subtle`, `--accent-text` | Fills, their interaction states, tinted backgrounds, accent-coloured text and links. |
 | Focus | `--focus-ring-color`, `--focus-ring-width`, `--focus-ring` | Visible focus indicators (`--focus-ring` is a `box-shadow` value). |
@@ -66,14 +66,35 @@ The 398 variables that `theme-light.css`, `theme-dark.css`, `theme-next-light.cs
 `theme-next-dark.css` and `theme-next/base.css` declare globally are the contract that components and
 third-party themes rely on. Lumen never renames or removes one (TDD §3.4). Each is either:
 
-- **aliased** in `aliases.css` to a semantic token (189 today), declared at `html:root` so it outranks
+- **aliased** in `aliases.css` to a semantic token (190 today), declared at `html:root` so it outranks
   Next's `:root` rules in either load order; or
-- **kept** at Next's value and listed in `scripts/retheme/lumen-contract.json` (209 today): sizes that JS
+- **kept** at Next's value and listed in `scripts/retheme/lumen-contract.json` (208 today): sizes that JS
   measures or caches, hue and lightness components, background-effect variants, log colours, and
   variables that already chain to an aliased one.
 
 When a built-in theme gains a variable, `lumen-contract.spec.ts` fails until the variable is aliased or
 added to the keep-list.
+
+## Chrome layer
+
+`stylesheets/theme-lumen/chrome/` restyles Trilium-owned surfaces where Next hard-codes a value in a
+rule rather than reading a variable. Every rule starts with `html:root`, for the same reason the aliases
+do: it must outrank Next and `style.css` whichever loads last. Where Next sets a value with `!important`
+through a variable, Lumen changes the variable instead.
+
+Each file changes only colour, radius, shadow and motion, within the limits of
+[Selector coupling](Selector%20coupling.md):
+
+| File | Surface | Left alone |
+| --- | --- | --- |
+| `shell.css` | Mobile menu cover and sidebar scrim | Their position and `z-index` |
+| `launcher.css` | Launcher buttons | Pane width and button margins (measured once for the left-pane split) |
+| `tree.css` | Active row pill (accent bar inside Next's `::before`, no shadow), keyboard focus ring, tree actions toolbar, tree settings popup | Row height, vertical padding and border width (FancyTree drop zones); `display` on rows; anything drawn outside the row (`contain: layout paint`) |
+| `menus.css` | Dropdown and menu radius, overlay shadow, group headings | `animation` on `.dropdown-menu` (desktop submenus appear through it); margins and borders on submenus |
+| `feedback.css` | Toast elevation and radius, note tooltip radius, alert bars | The toast `display` rule (toasts never receive `.show`) |
+
+The tree focus ring marks the focused row when it is not the active one, which happens during
+keyboard multi-selection; it is an inset outline because the row clips anything outside it.
 
 ## Guards
 

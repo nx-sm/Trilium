@@ -21,6 +21,8 @@
     --surface-raised: var(--p-neutral-0);
     --surface-overlay: var(--p-neutral-0);
     --surface-inverse: var(--p-neutral-900);
+    --surface-emphasis: var(--p-neutral-600);
+    --text-on-emphasis: var(--p-neutral-0);
 
     --text-primary: var(--p-neutral-900);
     --text-secondary: var(--p-neutral-700);
@@ -107,6 +109,8 @@
         --surface-raised: var(--p-neutral-850);
         --surface-overlay: var(--p-neutral-800);
         --surface-inverse: var(--p-neutral-700);
+        --surface-emphasis: var(--p-neutral-700);
+        --text-on-emphasis: var(--p-neutral-50);
 
         --text-primary: var(--p-neutral-100);
         --text-secondary: var(--p-neutral-300);
@@ -156,6 +160,8 @@
     --surface-raised: var(--p-neutral-850);
     --surface-overlay: var(--p-neutral-800);
     --surface-inverse: var(--p-neutral-700);
+    --surface-emphasis: var(--p-neutral-700);
+    --text-on-emphasis: var(--p-neutral-50);
 
     --text-primary: var(--p-neutral-100);
     --text-secondary: var(--p-neutral-300);

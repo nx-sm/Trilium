@@ -1,0 +1,14 @@
+/*
+ * Window shell. The cover and the mobile sidebar keep Next's position and stacking (the cover sits at
+ * `z-index: 2500`, under mobile menus at 3000); only their tint changes.
+ */
+
+html:root body.mobile #context-menu-cover.show {
+    background: color-mix(in srgb, var(--backdrop-color) 70%, transparent);
+}
+
+@media (max-width: 991px) {
+    html:root body.mobile #mobile-sidebar-container {
+        background-color: color-mix(in srgb, var(--backdrop-color) 50%, transparent);
+    }
+}

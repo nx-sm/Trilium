@@ -199,8 +199,9 @@ async function showSurface(page: Page, surface: Surface) {
         await page.evaluate(async (notePath) => {
             await (globalThis as unknown as GlobWindow).glob?.appContext.tabManager.getActiveContext()?.setNote(notePath);
         }, surface.notePath);
-        // Collections render through `.note-list-widget` rather than a printable note detail.
-        rendered = await page.locator(".note-detail-printable.visible, .note-list-widget").first()
+        // Collections render through `.note-list-widget` (the board through `.board-view`) rather than
+        // a printable note detail.
+        rendered = await page.locator(".note-detail-printable.visible, .note-list-widget, .board-view").first()
             .waitFor({ state: "visible", timeout: 15_000 })
             .then(() => true, () => false);
         await page.waitForLoadState("networkidle");

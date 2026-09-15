@@ -1,0 +1,17 @@
+/*
+ * Toasts, tooltips and alert bars. Toasts keep the `display` rule in `Toast.css`: they never receive
+ * Bootstrap's `.show`, so its `.toast:not(.show)` rule would hide them.
+ */
+
+html:root #toast-container .toast {
+    --bs-border-radius: var(--radius-surface);
+    box-shadow: var(--shadow-floating);
+}
+
+html:root .tooltip.note-tooltip > .tooltip-inner {
+    border-radius: var(--radius-surface);
+}
+
+html:root div.alert {
+    border-radius: var(--radius-control);
+}

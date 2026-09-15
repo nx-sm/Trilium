@@ -7,3 +7,9 @@
 @import url(./theme-lumen/tokens/primitives.css);
 @import url(./theme-lumen/tokens/semantic.css);
 @import url(./theme-lumen/tokens/aliases.css);
+
+@import url(./theme-lumen/chrome/shell.css);
+@import url(./theme-lumen/chrome/launcher.css);
+@import url(./theme-lumen/chrome/tree.css);
+@import url(./theme-lumen/chrome/menus.css);
+@import url(./theme-lumen/chrome/feedback.css);

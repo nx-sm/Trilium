@@ -91,7 +91,6 @@
         "--launcher-pane-vert-size",
         "--left-pane-item-action-button-hover-shadow",
         "--left-pane-item-selected-action-button-hover-shadow",
-        "--left-pane-item-selected-shadow",
         "--left-pane-item-selected-shadow-size",
         "--link-hover-color",
         "--log-error-color",

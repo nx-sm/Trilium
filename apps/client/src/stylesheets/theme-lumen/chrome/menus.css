@@ -1,0 +1,23 @@
+/*
+ * Menus and dropdowns. `animation` on `.dropdown-menu` is left to Next: desktop submenus sit at
+ * `opacity: 0` until `dropdown-menu-opening` runs (`style.css`). Item padding is measured before a
+ * context menu is placed, but margins and borders on submenus would break the hover overlap.
+ */
+
+html:root {
+    --dropdown-border-radius: var(--radius-surface);
+}
+
+html:root body.desktop .dropdown-menu {
+    box-shadow: var(--shadow-overlay);
+}
+
+html:root .dropdown-item {
+    border-radius: var(--radius-control);
+}
+
+html:root .dropdown-menu h6 {
+    font-size: var(--text-size-small);
+    font-weight: var(--font-weight-strong);
+    letter-spacing: 0.04em;
+}

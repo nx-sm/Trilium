@@ -132,6 +132,7 @@ html:root {
     --left-pane-item-hover-background: var(--state-hover);
     --left-pane-item-selected-background: var(--state-selected);
     --left-pane-item-selected-color: var(--text-primary);
+    --left-pane-item-selected-shadow: none;
     --left-pane-item-action-button-background: var(--state-pressed);
     --left-pane-item-action-button-color: var(--text-secondary);
     --left-pane-item-action-button-hover-background: var(--surface-base);
@@ -172,9 +173,9 @@ html:root {
     --new-tab-button-hover-color: var(--text-primary);
 
     /* Note header, badges and floating controls */
-    --note-icon-background-color: var(--surface-inverse);
-    --note-icon-color: var(--text-inverse);
-    --note-icon-hover-background-color: color-mix(in srgb, var(--surface-inverse) 80%, var(--surface-base));
+    --note-icon-background-color: var(--surface-emphasis);
+    --note-icon-color: var(--text-on-emphasis);
+    --note-icon-hover-background-color: color-mix(in srgb, var(--surface-emphasis) 85%, var(--text-primary));
     --badge-background-color: var(--state-hover);
     --promoted-attribute-card-background-color: var(--state-hover);
     --alert-bar-background: var(--state-warning-subtle);
