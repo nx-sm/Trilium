@@ -130,6 +130,26 @@ variable for the editor chrome, and for syntax colours the same palette as a lit
 `lumen-contrast.spec.ts` checks that those literals equal the `--code-*` tokens in both schemes, and that
 every syntax colour reaches 4.5:1 on the editor background.
 
+## Standalone theme
+
+The TDD's first rollout step ships Lumen as a user theme, adoptable without a fork. A user theme is
+served from a note download URL, where the relative imports of `theme-lumen.css` cannot resolve, so
+`scripts/retheme/bundle-lumen.mts` inlines them into one file:
+
+```bash
+node scripts/retheme/bundle-lumen.mts
+```
+
+It writes `dist/retheme/lumen-theme.css` (gitignored; about 8 KB gzipped) with an AGPL header and the
+install steps: a CSS code note with the bundle as content, labelled `#appTheme=lumen-standalone` and
+`#appThemeBase=next`, chosen under Settings → Appearance. The label value is not `lumen`, which this
+repository already uses as a built-in theme ID and would take precedence.
+
+As a user theme, Lumen differs from the built-in family in two ways: it follows the operating system's
+colour scheme, because Trilium offers no colour-scheme choice for custom themes, and it needs
+`#appThemeBase=next`, because it restyles Next rather than replacing it. Code notes keep their own editor
+theme; the Lumen editor theme exists only where `packages/codemirror` ships it.
+
 ## Guards
 
 | Guard | What it enforces | Run |
