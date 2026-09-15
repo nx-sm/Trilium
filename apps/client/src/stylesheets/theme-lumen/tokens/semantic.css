@@ -61,6 +61,19 @@
     --scrollbar-thumb-hover: color-mix(in srgb, var(--p-neutral-1000) 42%, transparent);
     --backdrop-color: var(--p-neutral-950);
 
+    /* Syntax colours for code editors. `packages/codemirror/src/themes/lumen.ts` falls back to the
+       same values when another app theme is active. */
+    --code-keyword: var(--p-violet-600);
+    --code-string: var(--p-success-700);
+    --code-number: var(--p-warning-700);
+    --code-function: var(--p-accent-600);
+    --code-type: var(--p-teal-700);
+    --code-property: var(--p-danger-700);
+    --code-comment: var(--p-neutral-600);
+    --code-punctuation: var(--p-neutral-700);
+    --code-heading: var(--p-accent-700);
+    --code-link: var(--p-accent-600);
+
     --shadow-color: var(--p-shadow-color-light);
     --shadow-raised: var(--p-shadow-1);
     --shadow-floating: var(--p-shadow-2);
@@ -145,6 +158,17 @@
         --scrollbar-thumb-hover: color-mix(in srgb, var(--p-neutral-0) 38%, transparent);
         --backdrop-color: var(--p-neutral-1000);
 
+        --code-keyword: var(--p-violet-300);
+        --code-string: var(--p-success-300);
+        --code-number: var(--p-warning-300);
+        --code-function: var(--p-accent-300);
+        --code-type: var(--p-teal-300);
+        --code-property: var(--p-danger-300);
+        --code-comment: var(--p-neutral-400);
+        --code-punctuation: var(--p-neutral-300);
+        --code-heading: var(--p-accent-200);
+        --code-link: var(--p-accent-300);
+
         --shadow-color: var(--p-shadow-color-dark);
         --shadow-raised: none;
         --shadow-floating: var(--p-shadow-dark-3);
@@ -195,6 +219,17 @@
     --scrollbar-thumb: color-mix(in srgb, var(--p-neutral-0) 24%, transparent);
     --scrollbar-thumb-hover: color-mix(in srgb, var(--p-neutral-0) 38%, transparent);
     --backdrop-color: var(--p-neutral-1000);
+
+    --code-keyword: var(--p-violet-300);
+    --code-string: var(--p-success-300);
+    --code-number: var(--p-warning-300);
+    --code-function: var(--p-accent-300);
+    --code-type: var(--p-teal-300);
+    --code-property: var(--p-danger-300);
+    --code-comment: var(--p-neutral-400);
+    --code-punctuation: var(--p-neutral-300);
+    --code-heading: var(--p-accent-200);
+    --code-link: var(--p-accent-300);
 
     --shadow-color: var(--p-shadow-color-dark);
     --shadow-raised: none;

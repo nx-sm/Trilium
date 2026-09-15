@@ -42,6 +42,7 @@ Component CSS reads **semantic tokens only** — never a primitive, never a raw 
 | States | `--state-danger`, `--state-warning`, `--state-success` and their `-subtle` backgrounds | Status colour. Never the only signal: pair it with an icon or text. |
 | Interaction | `--state-hover`, `--state-pressed`, `--state-selected` | Translucent fills that read correctly on any surface. |
 | Misc. colour | `--selection-background`, `--scrollbar-thumb`, `--scrollbar-thumb-hover`, `--backdrop-color`, `--shadow-color` | |
+| Code | `--code-keyword`, `--code-string`, `--code-number`, `--code-function`, `--code-type`, `--code-property`, `--code-comment`, `--code-punctuation`, `--code-heading`, `--code-link` | Syntax colours for code editors; see [Code editor theme](#code-editor-theme). |
 | Elevation | `--shadow-raised`, `--shadow-floating`, `--shadow-overlay` | `--shadow-raised` is `none` in dark mode, where elevation comes from lighter surfaces. Avoid shadows on repeated elements such as tree rows. |
 | Typography | `--font-ui`, `--font-content`, `--font-code`, `--text-size-small`, `--text-size-ui`, `--text-size-content`, `--text-size-heading`, `--line-height-ui`, `--line-height-content`, `--font-weight-regular`, `--font-weight-medium`, `--font-weight-strong` | The font stack includes CJK families; `--line-height-content` leaves room for CJK glyphs. |
 | Spacing | `--space-2xs` (2px), `--space-xs` (4), `--space-sm` (8), `--space-md` (12), `--space-lg` (16), `--space-xl` (24), `--space-2xl` (32) | Use logical properties (`padding-inline`, `margin-block-start`). |
@@ -115,12 +116,26 @@ connections, force-graph and MapLibre tiles draw their own colours.
 
 The e2e fixture has no canvas note, so `excalidraw.css` is checked by stylelint but not by a screenshot.
 
+## Code editor theme
+
+CodeMirror themes are extensions rather than stylesheets, so Lumen's is TypeScript:
+`packages/codemirror/src/themes/lumen.ts`, registered in `color_themes.ts` as `lumen-light` and
+`lumen-dark` and offered in Settings → Code Notes like any other editor theme. Both build the same
+theme and differ only in CodeMirror's dark flag, so with "match the application theme" on, set the light
+and dark code-note themes to the two Lumen entries.
+
+Every colour it uses is a Lumen token read live through `var()`, so the editor follows the app's colour
+scheme without a reload. Each carries a fallback for when another app theme is active: a Trilium theme
+variable for the editor chrome, and for syntax colours the same palette as a literal.
+`lumen-contrast.spec.ts` checks that those literals equal the `--code-*` tokens in both schemes, and that
+every syntax colour reaches 4.5:1 on the editor background.
+
 ## Guards
 
 | Guard | What it enforces | Run |
 | --- | --- | --- |
 | `scripts/retheme/lumen-contract.spec.ts` | Every contract variable aliased or kept; aliases at `html:root` and only on semantic tokens; semantic tokens only on primitives; identical dark tiers | `pnpm exec vitest run --project scripts scripts/retheme` |
-| `scripts/retheme/lumen-contrast.spec.ts` | WCAG AA in light and dark: 4.5:1 for text pairs (translucent fills composited over their surface), 3:1 for focus rings and strong borders | same |
+| `scripts/retheme/lumen-contrast.spec.ts` | WCAG AA in light and dark: 4.5:1 for text pairs and syntax colours (translucent fills composited over their surface), 3:1 for focus rings and strong borders; the code editor's fallback palette equals the `--code-*` tokens | same |
 | `trilium/token-values` (`scripts/stylelint/token-values.mts`) | No raw colour, font size or spacing in `stylesheets/theme-lumen/**` outside the primitives | `pnpm --filter client stylelint` |
 
 ## Screenshots

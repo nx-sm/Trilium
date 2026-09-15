@@ -202,6 +202,18 @@ const themes: ThemeDefinition[] = [
         variant: "light",
         load: async () => (await import("@fsegurai/codemirror-theme-vscode-light")).vsCodeLight
     },
+    {
+        id: "lumen-light",
+        name: "Lumen Light",
+        variant: "light",
+        load: async () => (await import("./themes/lumen.js")).createLumenTheme("light")
+    },
+    {
+        id: "lumen-dark",
+        name: "Lumen Dark",
+        variant: "dark",
+        load: async () => (await import("./themes/lumen.js")).createLumenTheme("dark")
+    },
 ]
 
 export function getThemeById(id: string) {

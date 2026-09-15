@@ -1127,6 +1127,9 @@ importers:
       '@codemirror/lang-xml':
         specifier: 6.1.0
         version: 6.1.0
+      '@codemirror/language':
+        specifier: 6.12.4
+        version: 6.12.4
       '@codemirror/language-data':
         specifier: 6.5.2
         version: 6.5.2
@@ -1229,6 +1232,9 @@ importers:
       '@fsegurai/codemirror-theme-vscode-light':
         specifier: 6.2.8
         version: 6.2.8(@codemirror/language@6.12.4)(@codemirror/state@6.7.4)(@codemirror/view@6.43.11)(@lezer/highlight@1.2.3)
+      '@lezer/highlight':
+        specifier: 1.2.3
+        version: 1.2.3
       '@replit/codemirror-indentation-markers':
         specifier: 6.5.3
         version: 6.5.3(@codemirror/language@6.12.4)(@codemirror/state@6.7.4)(@codemirror/view@6.43.11)

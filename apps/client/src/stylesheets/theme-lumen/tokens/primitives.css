@@ -75,6 +75,17 @@
     --p-success-900: #15442c;
     --p-success-950: #072616;
 
+    /* Syntax hues for code editors. */
+    --p-violet-300: #b9a3f7;
+    --p-violet-400: #9a7cf0;
+    --p-violet-600: #6a47d4;
+    --p-violet-700: #5536b0;
+
+    --p-teal-300: #7fd3d0;
+    --p-teal-400: #45b8b4;
+    --p-teal-600: #1a7f7c;
+    --p-teal-700: #16625f;
+
     /* Type. Inter and JetBrainsLight are the faces the client bundles (`theme-next/base.css`,
        `style.css`); the CJK families keep Chinese and Japanese text in a matching sans. */
     --p-font-sans: "Inter", "Inter var", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans",

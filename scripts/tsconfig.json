@@ -16,7 +16,8 @@
     "**/*.ts",
     "**/*.mts",
     "../packages/commons/src/lib/i18n.ts",
-    "../apps/website/src/locales.ts"
+    "../apps/website/src/locales.ts",
+    "../packages/codemirror/src/themes/lumen.ts"
   ],
   "exclude": [
     "dist"

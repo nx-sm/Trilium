@@ -39,7 +39,9 @@ describe("Lumen contrast", () => {
         [ "--text-on-accent", "--state-danger" ],
         [ "--text-on-accent", "--state-success" ],
         [ "--text-inverse", "--surface-inverse" ],
-        [ "--text-on-emphasis", "--surface-emphasis" ]
+        [ "--text-on-emphasis", "--surface-emphasis" ],
+        ...[ "keyword", "string", "number", "function", "type", "property", "comment", "punctuation", "heading", "link" ]
+            .map((role): [ string, string ] => [ `--code-${role}`, "--surface-base" ])
     ];
 
     /** Text drawn on a translucent fill, which sits on a surface: [text, fill, surface]. */
@@ -83,7 +85,21 @@ describe("Lumen contrast", () => {
             expect(failures).toEqual([]);
         });
     }
+
+    it("keeps the code editor's fallback palette equal to the --code-* tokens", async () => {
+        const { SYNTAX_FALLBACKS } = await import("../../packages/codemirror/src/themes/lumen.js");
+
+        for (const [ scheme, tokens ] of [ [ "light", light ], [ "dark", dark ] ] as const) {
+            for (const [ role, fallback ] of Object.entries(SYNTAX_FALLBACKS[scheme])) {
+                expect(toHex(resolveColor(`--code-${role}`, tokens)), `${scheme} ${role}`).toBe(fallback);
+            }
+        }
+    });
 });
+
+function toHex([ r, g, b ]: Rgba) {
+    return `#${[ r, g, b ].map((channel) => Math.round(channel).toString(16).padStart(2, "0")).join("")}`;
+}
 
 function tokensWhere(file: string, matches: (selector: string) => boolean) {
     const { definitions } = scanStylesheet(readFileSync(join(ROOT, TOKENS, file), "utf-8"), file);
