@@ -35,7 +35,7 @@ export const ready = bundleService.getWidgetBundlesByParent().then(async (widget
         toastService.showPersistent({
             id: "critical-error",
             title: t("toast.critical-error.title"),
-            icon: "alert",
+            icon: "error",
             message: t("toast.critical-error.message", { message: e instanceof Error ? e.message : String(e) })
         });
         console.error("Critical error occured", e);
