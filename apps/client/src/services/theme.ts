@@ -1,21 +1,10 @@
 import { readCssVar } from "../utils/css-var.js";
+import { resolveColorScheme, THEME_FAMILY_SCHEMES } from "./color_scheme.js";
 
 export function getThemeStyle(): "auto" | "light" | "dark" {
-    const configuredTheme = window.glob?.theme;
-    if (configuredTheme === "auto" || configuredTheme === "next") {
-        return "auto";
-    }
-
-    if (configuredTheme === "light" || configuredTheme === "dark") {
-        return configuredTheme;
-    }
-
-    if (configuredTheme === "next-light") {
-        return "light";
-    }
-
-    if (configuredTheme === "next-dark") {
-        return "dark";
+    const { family, scheme } = resolveColorScheme(window.glob?.theme);
+    if (family) {
+        return scheme === "system" ? "auto" : scheme;
     }
 
     const style = window.getComputedStyle(document.body);
@@ -44,7 +33,7 @@ export interface StylesheetRef {
 type ThemeBase = "next" | "next-light" | "next-dark";
 
 /** Built-in themes whose stylesheets can be resolved purely on the client, without a server lookup. */
-const BUILTIN_THEMES = new Set([ "auto", "light", "dark", "next", "next-light", "next-dark" ]);
+const BUILTIN_THEMES = new Set(Object.values(THEME_FAMILY_SCHEMES).flatMap((schemes) => Object.values(schemes)));
 
 /** Marks the always-present baseline `theme-light.css` link, used as the insertion anchor when swapping themes. */
 const THEME_BASE_ATTR = "data-theme-base";
@@ -74,6 +63,15 @@ export function getConfiguredThemeStylesheets(stylesheetsPath: string, theme: st
 
     if (theme === "next-dark") {
         return [{ href: `${stylesheetsPath}/theme-next-dark.css` }];
+    }
+
+    // Lumen is a token layer over the Next stylesheets of the same colour scheme.
+    const { family, scheme } = resolveColorScheme(theme);
+    if (family === "lumen") {
+        return [
+            ...getConfiguredThemeStylesheets(stylesheetsPath, THEME_FAMILY_SCHEMES.modern[scheme]),
+            { href: `${stylesheetsPath}/theme-lumen.css` }
+        ];
     }
 
     if (theme !== "light" && customThemeCssUrl) {
@@ -107,6 +105,20 @@ export function createStylesheetLink(ref: StylesheetRef, opts?: { base?: boolean
         linkEl.setAttribute(THEME_STYLESHEET_ATTR, "true");
     }
     return linkEl;
+}
+
+/**
+ * Sets `data-theme` on `<html>` to the colour scheme that a built-in theme pins (`lumen-dark` →
+ * `dark`), and removes it for a theme that follows the OS or a custom theme. Lumen's semantic tokens
+ * switch on it (`stylesheets/theme-lumen/tokens/semantic.css`).
+ */
+export function applyColorSchemeAttribute(theme: string) {
+    const { family, scheme } = resolveColorScheme(theme);
+    if (family && scheme !== "system") {
+        document.documentElement.setAttribute("data-theme", scheme);
+    } else {
+        document.documentElement.removeAttribute("data-theme");
+    }
 }
 
 /** Toggles the `light-theme`/`dark-theme` body classes to match the active theme's `--theme-style`. */
@@ -223,6 +235,7 @@ export function applyTheme(theme: string, customThemeCssUrl?: string, themeBase?
             oldLink.remove();
         }
         document.body.setAttribute("data-theme-id", theme);
+        applyColorSchemeAttribute(theme);
         updateColorSchemeClasses();
         updateThemeCapabilities();
         notifyThemeChanged();

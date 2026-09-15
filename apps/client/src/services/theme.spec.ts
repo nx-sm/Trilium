@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { applyTheme, buildThemeStylesheetRefs, getConfiguredThemeStylesheets, getEffectiveThemeStyle, getThemeStyle, initThemeChangeNotifier, onEffectiveThemeStyleChange } from "./theme.js";
+import { applyColorSchemeAttribute, applyTheme, buildThemeStylesheetRefs, getConfiguredThemeStylesheets, getEffectiveThemeStyle, getThemeStyle, initThemeChangeNotifier, onEffectiveThemeStyleChange } from "./theme.js";
 
 // theme.ts lazily imports the app context to emit `themeChanged`; mock it so the tests capture the emission
 // without pulling the whole app graph into happy-dom.
@@ -65,6 +65,12 @@ describe("getThemeStyle", () => {
         setTheme("next-light");
         expect(getThemeStyle()).toBe("light");
         setTheme("next-dark");
+        expect(getThemeStyle()).toBe("dark");
+        setTheme("lumen");
+        expect(getThemeStyle()).toBe("auto");
+        setTheme("lumen-light");
+        expect(getThemeStyle()).toBe("light");
+        setTheme("lumen-dark");
         expect(getThemeStyle()).toBe("dark");
 
         // None of the explicit branches should fall through to computed styles.
@@ -152,12 +158,47 @@ describe("getConfiguredThemeStylesheets", () => {
         ]);
     });
 
+    it("layers Lumen over the Next stylesheets of the same colour scheme", () => {
+        expect(getConfiguredThemeStylesheets(STYLESHEETS_PATH, "lumen")).toEqual([
+            { href: `${STYLESHEETS_PATH}/theme-next-light.css` },
+            { href: `${STYLESHEETS_PATH}/theme-next-dark.css`, media: "(prefers-color-scheme: dark)" },
+            { href: `${STYLESHEETS_PATH}/theme-lumen.css` }
+        ]);
+        expect(getConfiguredThemeStylesheets(STYLESHEETS_PATH, "lumen-light")).toEqual([
+            { href: `${STYLESHEETS_PATH}/theme-next-light.css` },
+            { href: `${STYLESHEETS_PATH}/theme-lumen.css` }
+        ]);
+        expect(getConfiguredThemeStylesheets(STYLESHEETS_PATH, "lumen-dark")).toEqual([
+            { href: `${STYLESHEETS_PATH}/theme-next-dark.css` },
+            { href: `${STYLESHEETS_PATH}/theme-lumen.css` }
+        ]);
+    });
+
     it("uses the custom CSS URL for non-built-in themes, but never for the light baseline", () => {
         expect(getConfiguredThemeStylesheets(STYLESHEETS_PATH, "my-theme", "api/notes/download/abc123")).toEqual([
             { href: "api/notes/download/abc123" }
         ]);
         expect(getConfiguredThemeStylesheets(STYLESHEETS_PATH, "light", "api/notes/download/abc123")).toEqual([]);
         expect(getConfiguredThemeStylesheets(STYLESHEETS_PATH, "my-theme")).toEqual([]);
+    });
+});
+
+describe("applyColorSchemeAttribute", () => {
+    afterEach(() => {
+        document.documentElement.removeAttribute("data-theme");
+    });
+
+    it("pins data-theme for a built-in theme with a fixed scheme, and clears it for one that follows the OS", () => {
+        applyColorSchemeAttribute("lumen-dark");
+        expect(document.documentElement.getAttribute("data-theme")).toBe("dark");
+        applyColorSchemeAttribute("next-light");
+        expect(document.documentElement.getAttribute("data-theme")).toBe("light");
+
+        for (const theme of [ "lumen", "next", "my-theme" ]) {
+            document.documentElement.setAttribute("data-theme", "dark");
+            applyColorSchemeAttribute(theme);
+            expect(document.documentElement.hasAttribute("data-theme"), theme).toBe(false);
+        }
     });
 });
 

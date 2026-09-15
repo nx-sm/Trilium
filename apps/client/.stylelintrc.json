@@ -1,4 +1,15 @@
 {
+  "plugins": ["../../scripts/stylelint/token-values.mts"],
+  "overrides": [
+    {
+      "files": ["src/stylesheets/theme-lumen/**/*.css"],
+      "rules": { "trilium/token-values": true }
+    },
+    {
+      "files": ["src/stylesheets/theme-lumen/tokens/primitives.css"],
+      "rules": { "trilium/token-values": null }
+    }
+  ],
   "languageOptions": {
     "directionality": {
       "block": "top-to-bottom",

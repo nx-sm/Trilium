@@ -6,6 +6,7 @@ export const COLOR_SCHEME_CYCLE: readonly ColorScheme[] = [ "system", "light", "
 /** Maps each theme family and color scheme to the concrete `theme` option value. */
 export const THEME_FAMILY_SCHEMES: Record<string, Record<ColorScheme, string>> = {
     modern: { system: "next", light: "next-light", dark: "next-dark" },
+    lumen: { system: "lumen", light: "lumen-light", dark: "lumen-dark" },
     legacy: { system: "auto", light: "light", dark: "dark" }
 };
 

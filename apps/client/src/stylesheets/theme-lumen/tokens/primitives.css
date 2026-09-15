@@ -1,0 +1,137 @@
+/*
+ * Lumen primitives: raw values with no meaning of their own. Only `semantic.css` reads them;
+ * components and aliases never do.
+ *
+ * Colours are hex so that JS readers copying a resolved value elsewhere (the mind map's SVG export
+ * reads `--main-background-color`, the PDF viewer copies every `:root` property) get a plain colour.
+ */
+
+:root {
+    /* Neutral: a slightly cool grey. The 650, 750, 850 and 925 steps serve dark-mode surfaces. */
+    --p-neutral-0: #ffffff;
+    --p-neutral-50: #f6f7f9;
+    --p-neutral-100: #eef0f3;
+    --p-neutral-150: #e6e8ec;
+    --p-neutral-200: #dcdfe5;
+    --p-neutral-300: #c5c9d1;
+    --p-neutral-400: #a6abb5;
+    --p-neutral-500: #787d8a;
+    --p-neutral-600: #5b606d;
+    --p-neutral-650: #51555f;
+    --p-neutral-700: #444853;
+    --p-neutral-750: #393c45;
+    --p-neutral-800: #2e3139;
+    --p-neutral-850: #25282e;
+    --p-neutral-900: #1d1f24;
+    --p-neutral-925: #18191e;
+    --p-neutral-950: #131418;
+    --p-neutral-1000: #0c0d10;
+
+    --p-accent-50: #eef3ff;
+    --p-accent-100: #dfe8fe;
+    --p-accent-200: #c3d3fd;
+    --p-accent-300: #9db6f8;
+    --p-accent-400: #7494f0;
+    --p-accent-500: #5274e6;
+    --p-accent-600: #3d5bd4;
+    --p-accent-700: #3349b0;
+    --p-accent-800: #2d3f8c;
+    --p-accent-900: #29386f;
+    --p-accent-950: #1a2244;
+
+    --p-danger-50: #fef2f2;
+    --p-danger-100: #fde3e3;
+    --p-danger-200: #fbcbcb;
+    --p-danger-300: #f6a3a3;
+    --p-danger-400: #ee6f6f;
+    --p-danger-500: #e14545;
+    --p-danger-600: #c92f2f;
+    --p-danger-700: #a72525;
+    --p-danger-800: #8a2323;
+    --p-danger-900: #732424;
+    --p-danger-950: #3f0e0e;
+
+    --p-warning-50: #fffaeb;
+    --p-warning-100: #fef0c7;
+    --p-warning-200: #fde08a;
+    --p-warning-300: #fcc94d;
+    --p-warning-400: #f9b024;
+    --p-warning-500: #ef920b;
+    --p-warning-600: #d06d06;
+    --p-warning-700: #ac4c09;
+    --p-warning-800: #8c3b0f;
+    --p-warning-900: #733210;
+    --p-warning-950: #421804;
+
+    --p-success-50: #effbf3;
+    --p-success-100: #d8f5e1;
+    --p-success-200: #b3e9c6;
+    --p-success-300: #80d6a2;
+    --p-success-400: #4bbc79;
+    --p-success-500: #28a05c;
+    --p-success-600: #1c8249;
+    --p-success-700: #19673c;
+    --p-success-800: #185233;
+    --p-success-900: #15442c;
+    --p-success-950: #072616;
+
+    /* Type. Inter and JetBrainsLight are the faces the client bundles (`theme-next/base.css`,
+       `style.css`); the CJK families keep Chinese and Japanese text in a matching sans. */
+    --p-font-sans: "Inter", "Inter var", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans",
+        "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans", "Microsoft YaHei", "Noto Sans CJK SC",
+        sans-serif;
+    --p-font-mono: "JetBrains Mono", JetBrainsLight, ui-monospace, "SF Mono", Menlo, Consolas,
+        "Liberation Mono", monospace;
+
+    /* 1.200 minor third around 1rem. */
+    --p-text-xs: 0.75rem;
+    --p-text-sm: 0.875rem;
+    --p-text-md: 1rem;
+    --p-text-lg: 1.125rem;
+    --p-text-xl: 1.35rem;
+    --p-text-2xl: 1.62rem;
+    --p-text-3xl: 1.944rem;
+
+    --p-weight-regular: 400;
+    --p-weight-medium: 500;
+    --p-weight-semibold: 600;
+    --p-weight-bold: 700;
+
+    --p-leading-tight: 1.25;
+    --p-leading-normal: 1.5;
+    /* Room for CJK glyphs, which sit taller in the line box than Latin ones. */
+    --p-leading-relaxed: 1.65;
+
+    /* 4px base. */
+    --p-space-0-5: 2px;
+    --p-space-1: 4px;
+    --p-space-1-5: 6px;
+    --p-space-2: 8px;
+    --p-space-3: 12px;
+    --p-space-4: 16px;
+    --p-space-5: 20px;
+    --p-space-6: 24px;
+    --p-space-8: 32px;
+    --p-space-10: 40px;
+    --p-space-12: 48px;
+
+    --p-radius-xs: 3px;
+    --p-radius-sm: 4px;
+    --p-radius-md: 6px;
+    --p-radius-lg: 10px;
+    --p-radius-xl: 14px;
+    --p-radius-full: 999px;
+
+    --p-shadow-color-light: rgb(16 18 24 / 0.2);
+    --p-shadow-color-dark: rgb(0 0 0 / 0.5);
+    --p-shadow-1: 0 1px 2px rgb(16 18 24 / 0.06), 0 1px 1px rgb(16 18 24 / 0.04);
+    --p-shadow-2: 0 4px 12px rgb(16 18 24 / 0.08), 0 1px 3px rgb(16 18 24 / 0.06);
+    --p-shadow-3: 0 12px 32px rgb(16 18 24 / 0.14), 0 2px 6px rgb(16 18 24 / 0.08);
+    --p-shadow-dark-3: 0 12px 32px rgb(0 0 0 / 0.45), 0 0 0 1px rgb(255 255 255 / 0.04);
+
+    --p-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --p-ease-emphasized: cubic-bezier(0.3, 0, 0, 1);
+    --p-duration-fast: 120ms;
+    --p-duration-base: 200ms;
+    --p-duration-slow: 320ms;
+}

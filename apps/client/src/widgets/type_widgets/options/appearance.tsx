@@ -48,6 +48,12 @@ const THEME_FAMILIES: ThemeFamily[] = [
         schemes: THEME_FAMILY_SCHEMES.modern
     },
     {
+        key: "lumen",
+        title: t("theme.lumen_themes"),
+        icon: "bx bx-bulb",
+        schemes: THEME_FAMILY_SCHEMES.lumen
+    },
+    {
         key: "legacy",
         title: t("theme.legacy_themes"),
         icon: "bx bx-history",

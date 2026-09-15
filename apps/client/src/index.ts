@@ -2,7 +2,7 @@ import { createFontStylesheetLink } from "./services/font";
 import {
     CLIENT_STARTUP_PHASES, hideSplash, initSplashProgress, reportSplashPhase, showSplashError
 } from "./services/splash";
-import { buildThemeStylesheetRefs, createStylesheetLink, getThemeStyle, initThemeChangeNotifier, StylesheetRef } from "./services/theme";
+import { applyColorSchemeAttribute, buildThemeStylesheetRefs, createStylesheetLink, getThemeStyle, initThemeChangeNotifier, StylesheetRef } from "./services/theme";
 
 /**
  * How long the tab that owns the SQLite worker waits for it to answer `/bootstrap`. Matches the
@@ -136,6 +136,7 @@ function loadStylesheets() {
     }
 
     const stylesheetsPath = `${assetPath}/stylesheets`;
+    applyColorSchemeAttribute(theme);
     appendStylesheet({ href: `${stylesheetsPath}/ckeditor-theme.css` });
     // Marked so it can be swapped when font options change without reloading. Skipped on the
     // login / set-password pre-auth screens, where the /api/fonts request 401s (and, under nosniff,

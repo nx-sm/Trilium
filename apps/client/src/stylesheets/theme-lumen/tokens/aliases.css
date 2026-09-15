@@ -1,0 +1,244 @@
+/*
+ * Lumen aliases: the theme contract (the variables the built-in themes declare, which components and
+ * third-party themes read) re-pointed at semantic tokens. No name is renamed or removed; the
+ * variables Lumen leaves at Next's value are listed in `scripts/retheme/lumen-contract.json`.
+ *
+ * `html:root` outranks the `:root` rules of `theme-next-{light,dark}.css`, so these win whether
+ * this stylesheet loads after Next (the built-in theme) or before it (a user theme note layered over
+ * Next with `#appThemeBase`). Scoped overrides such as `.with-hue` or `body.background-effects` still
+ * apply on their own elements.
+ *
+ * Sizes that JS measures or caches (`--launcher-pane-*-size`, `--tab-height`, `--icon-button-size`,
+ * …) are deliberately absent; see `docs/Retheme/Selector coupling.md`.
+ */
+
+html:root {
+    /* Base */
+    --main-background-color: var(--surface-base);
+    --main-text-color: var(--text-primary);
+    --main-border-color: var(--border-subtle);
+    --subtle-border-color: var(--border-subtle);
+    --muted-text-color: var(--text-tertiary);
+    --accented-background-color: var(--surface-accented);
+    --contextual-help-icon-color: var(--accent-text);
+    --selection-background-color: var(--selection-background);
+    --root-background: var(--surface-sunken);
+
+    /* Typography. Sizes stay user options; `body` rules from the font settings override families. */
+    --main-font-family: var(--font-ui);
+    --monospace-font-family: var(--font-code);
+
+    /* Links */
+    --link-color: var(--accent-text);
+    --link-hover-background: var(--accent-subtle);
+    --link-selection-outline-color: var(--focus-ring-color);
+
+    /* Hovered and active list items */
+    --hover-item-text-color: var(--text-primary);
+    --hover-item-background-color: var(--state-hover);
+    --active-item-text-color: var(--text-primary);
+    --active-item-background-color: var(--state-selected);
+
+    /* Buttons */
+    --button-border-color: var(--border-default);
+    --button-border-radius: var(--radius-control);
+    --primary-button-background-color: var(--accent-default);
+    --primary-button-border-color: var(--accent-default);
+    --primary-button-text-color: var(--text-on-accent);
+    --cmd-button-background-color: var(--state-hover);
+    --cmd-button-text-color: var(--text-secondary);
+    --cmd-button-hover-background-color: var(--state-pressed);
+    --cmd-button-hover-text-color: var(--text-primary);
+    --cmd-button-icon-color: var(--text-primary);
+    --cmd-button-keyboard-shortcut-background: var(--state-pressed);
+    --cmd-button-keyboard-shortcut-color: var(--text-primary);
+    --low-profile-button-active-background-color: var(--accent-default);
+    --low-profile-button-active-color: var(--text-on-accent);
+    --button-group-background-color: var(--state-hover);
+    --button-group-active-button-background-color: var(--surface-base);
+    --button-group-active-button-color: var(--text-primary);
+
+    /* Form controls */
+    --input-background-color: var(--state-hover);
+    --input-text-color: var(--text-primary);
+    --input-placeholder-color: var(--text-tertiary);
+    --input-selection-background: var(--selection-background);
+    --input-selection-text-color: var(--text-primary);
+    --input-hover-background: var(--state-pressed);
+    --input-hover-color: var(--text-primary);
+    --input-focus-outline-color: var(--focus-ring-color);
+    --input-focus-background: var(--surface-base);
+    --input-focus-color: var(--text-primary);
+    --input-action-button-color: var(--text-secondary);
+    --input-action-button-hover: var(--text-primary);
+    --radio-checkbox-background: var(--border-default);
+    --radio-checkbox-hover-background: var(--border-strong);
+    --radio-checkbox-indicator-color: var(--text-primary);
+    --select-focus-background: var(--surface-overlay);
+    --select-group-heading-text-color: var(--text-tertiary);
+
+    /* Quick search */
+    --quick-search-background: var(--state-hover);
+    --quick-search-color: var(--text-tertiary);
+    --quick-search-hover-background: var(--state-pressed);
+    --quick-search-focus-border: var(--focus-ring-color);
+    --quick-search-focus-background: var(--surface-base);
+    --quick-search-focus-color: var(--text-primary);
+    --quick-search-result-content-background: var(--state-hover);
+    --quick-search-result-highlight-color: var(--accent-text);
+    --quick-search-result-fuzzy-highlight-color: var(--state-warning);
+
+    /* Menus and dropdowns. The translucent background is what the menu backdrop blur shows through. */
+    --menu-text-color: var(--text-primary);
+    --menu-background-color: color-mix(in srgb, var(--surface-overlay) 88%, transparent);
+    --menu-background-color-no-backdrop: var(--surface-overlay);
+    --menu-item-icon-color: var(--text-secondary);
+    --menu-item-arrow-color: var(--text-tertiary);
+    --menu-item-delimiter-color: var(--border-subtle);
+    --menu-item-group-header-color: var(--text-tertiary);
+    --menu-item-keyboard-shortcut-color: var(--text-tertiary);
+    --menu-section-background-color: var(--state-hover);
+    --dropdown-border-color: var(--border-subtle);
+    --dropdown-item-icon-destructive-color: var(--state-danger);
+
+    /* Dialogs */
+    --modal-backdrop-color: var(--backdrop-color);
+    --modal-background-color: var(--surface-overlay);
+    --modal-border-color: var(--border-subtle);
+    --modal-shadow-color: var(--shadow-color);
+    --modal-title-color: var(--text-primary);
+    --modal-control-button-background: var(--state-hover);
+    --modal-control-button-color: var(--text-secondary);
+    --modal-control-button-hover-background: var(--state-pressed);
+    --modal-control-button-hover-color: var(--text-primary);
+    --modal-footer-background: var(--surface-subtle);
+    --modal-footer-color: var(--text-secondary);
+    --tool-dialog-background-color: var(--surface-overlay);
+    --tool-dialog-shadow-color: var(--shadow-color);
+
+    /* Toasts and tooltips */
+    --toast-background: color-mix(in srgb, var(--surface-inverse) 94%, transparent);
+    --toast-text-color: var(--text-inverse);
+    --tooltip-background-color: color-mix(in srgb, var(--surface-inverse) 92%, transparent);
+    --tooltip-foreground-color: var(--text-inverse);
+    --tooltip-border-radius: var(--radius-control);
+    --note-tooltip-background-color: color-mix(in srgb, var(--surface-overlay) 90%, transparent);
+
+    /* Note tree */
+    --left-pane-background-color: var(--surface-sunken);
+    --left-pane-text-color: var(--text-primary);
+    --left-pane-icon-color: var(--text-secondary);
+    --left-pane-collapsed-border-color: var(--border-subtle);
+    --left-pane-item-hover-background: var(--state-hover);
+    --left-pane-item-selected-background: var(--state-selected);
+    --left-pane-item-selected-color: var(--text-primary);
+    --left-pane-item-action-button-background: var(--state-pressed);
+    --left-pane-item-action-button-color: var(--text-secondary);
+    --left-pane-item-action-button-hover-background: var(--surface-base);
+
+    /* Launcher */
+    --launcher-pane-vert-background-color: var(--surface-sunken);
+    --launcher-pane-vert-text-color: var(--text-secondary);
+    --launcher-pane-vert-button-hover-color: var(--text-primary);
+    --launcher-pane-vert-button-hover-background: var(--state-hover);
+    --launcher-pane-vert-button-hover-shadow: none;
+    --launcher-pane-vert-button-focus-outline-color: var(--focus-ring-color);
+    --launcher-pane-horiz-background-color: var(--surface-sunken);
+    --launcher-pane-horiz-text-color: var(--text-secondary);
+    --launcher-pane-horiz-border-color: var(--border-subtle);
+    --launcher-pane-horiz-button-hover-color: var(--text-primary);
+    --launcher-pane-horiz-button-hover-background: var(--state-hover);
+    --launcher-pane-horiz-button-focus-outline-color: var(--focus-ring-color);
+    --global-menu-update-available-badge-background-color: var(--state-success);
+    --global-menu-update-available-badge-color: var(--text-on-accent);
+    --protected-session-active-icon-color: var(--state-success);
+    --sync-status-error-pulse-color: var(--state-danger);
+
+    /* Tabs */
+    --active-tab-background-color: var(--surface-base);
+    --active-tab-hover-background-color: var(--surface-base);
+    --active-tab-icon-color: var(--text-secondary);
+    --active-tab-text-color: var(--text-primary);
+    --active-tab-shadow: var(--shadow-raised);
+    --active-tab-dragging-shadow: var(--shadow-floating);
+    --inactive-tab-hover-background-color: var(--state-hover);
+    --inactive-tab-text-color: var(--text-secondary);
+    --tab-close-button-hover-background: var(--state-danger);
+    --tab-close-button-hover-color: var(--text-on-accent);
+    --new-tab-button-background: var(--state-hover);
+    --new-tab-button-color: var(--text-secondary);
+    --new-tab-button-shadow: none;
+    --new-tab-button-hover-background: var(--state-pressed);
+    --new-tab-button-hover-color: var(--text-primary);
+
+    /* Note header, badges and floating controls */
+    --note-icon-background-color: var(--surface-inverse);
+    --note-icon-color: var(--text-inverse);
+    --note-icon-hover-background-color: color-mix(in srgb, var(--surface-inverse) 80%, var(--surface-base));
+    --badge-background-color: var(--state-hover);
+    --promoted-attribute-card-background-color: var(--state-hover);
+    --alert-bar-background: var(--state-warning-subtle);
+    --floating-button-background-color: color-mix(in srgb, var(--surface-raised) 85%, transparent);
+    --floating-button-color: var(--text-secondary);
+    --floating-button-hover-background: var(--state-hover);
+    --floating-button-hover-color: var(--text-primary);
+    --floating-button-hide-button-background: var(--state-hover);
+    --floating-button-hide-button-color: var(--text-tertiary);
+    --center-pane-border-radius: var(--radius-surface);
+    --overlay-button-border-radius: var(--radius-control);
+
+    /* Right pane, status bar, splits, scrollbars */
+    --right-pane-background-color: var(--surface-base);
+    --right-pane-heading-color: var(--text-tertiary);
+    --right-pane-item-hover-background: var(--state-hover);
+    --right-pane-item-hover-color: var(--text-primary);
+    --right-pane-peek-background: color-mix(in srgb, var(--surface-overlay) 92%, transparent);
+    --status-bar-border-color: var(--border-subtle);
+    --gutter-hover-color: var(--border-strong);
+    --scrollbar-thumb-color: var(--scrollbar-thumb);
+    --scrollbar-thumb-hover-color: var(--scrollbar-thumb-hover);
+
+    /* Cards */
+    --card-background-color: var(--state-hover);
+    --card-background-hover-color: var(--state-pressed);
+
+    /* Text editor */
+    --inline-code-background-color: var(--state-hover);
+    --inline-code-border-color: var(--border-subtle);
+    --inline-code-hover-background-color: var(--state-pressed);
+    --ck-editor-popup-border-color: var(--border-subtle);
+    --ck-editor-toolbar-button-on-background: var(--state-selected);
+    --ck-editor-toolbar-button-on-color: var(--text-primary);
+    --ck-editor-toolbar-dropdown-button-open-background: var(--state-hover);
+
+    /* In-app help */
+    --help-card-heading-color: var(--text-tertiary);
+    --help-kbd-shortcut-color: var(--text-secondary);
+    --help-kbd-shortcut-background: var(--surface-subtle);
+    --help-kbd-shortcut-border: var(--border-default);
+    --help-code-color: var(--text-primary);
+    --help-code-background: var(--surface-accented);
+
+    /* Collections and timelines */
+    --note-list-view-content-background: var(--state-hover);
+    --calendar-day-highlight-background: var(--state-selected);
+    --calendar-coll-event-background-color: var(--surface-accented);
+    --calendar-coll-event-text-color: var(--text-primary);
+    --calendar-coll-today-background-color: var(--state-hover);
+    --board-column-background: var(--surface-accented);
+    --board-drop-hint-color: var(--text-secondary);
+    --board-limit-exceeded-background: var(--state-danger);
+    --timeline-bullet-color: var(--border-strong);
+    --timeline-bullet-hover-color: var(--text-primary);
+    --timeline-connector-color: var(--border-subtle);
+    --timeline-connector-active-color: var(--border-default);
+
+    /* Task checkboxes */
+    --task-checkbox-without-state-background: var(--state-pressed);
+    --task-checkbox-without-state-hover-background: var(--border-strong);
+    --task-checkbox-with-state-background: var(--text-tertiary);
+    --task-checkbox-with-state-hover-background: var(--text-secondary);
+    --task-checkbox-done-color: var(--state-success);
+    --task-checkbox-unknown-state-color: var(--state-danger);
+    --task-checkbox-glyph-color: var(--text-on-accent);
+}

@@ -1,0 +1,206 @@
+/*
+ * Lumen semantic tokens: what a value means. This is the only layer that changes between light and
+ * dark, in three tiers:
+ *
+ *   :root                                  light, the default
+ *   (prefers-color-scheme: dark) :root:not([data-theme="light"])   dark when the OS asks for it
+ *   :root[data-theme="dark"]               dark by explicit choice
+ *
+ * `services/theme.ts` sets `data-theme` on <html> for `lumen-light` and `lumen-dark`, and removes it
+ * for `lumen`, which follows the OS.
+ *
+ * Dark mode is not an inversion: surfaces get lighter as they rise, and accents move to lighter,
+ * less saturated steps so they do not vibrate against dark backgrounds.
+ */
+
+:root {
+    --surface-sunken: var(--p-neutral-100);
+    --surface-base: var(--p-neutral-0);
+    --surface-subtle: var(--p-neutral-50);
+    --surface-accented: var(--p-neutral-100);
+    --surface-raised: var(--p-neutral-0);
+    --surface-overlay: var(--p-neutral-0);
+    --surface-inverse: var(--p-neutral-900);
+
+    --text-primary: var(--p-neutral-900);
+    --text-secondary: var(--p-neutral-700);
+    --text-tertiary: var(--p-neutral-600);
+    --text-inverse: var(--p-neutral-0);
+    --text-on-accent: var(--p-neutral-0);
+
+    --border-subtle: var(--p-neutral-200);
+    --border-default: var(--p-neutral-300);
+    --border-strong: var(--p-neutral-500);
+
+    --accent-default: var(--p-accent-600);
+    --accent-hover: var(--p-accent-700);
+    --accent-active: var(--p-accent-800);
+    --accent-subtle: color-mix(in srgb, var(--p-accent-500) 12%, transparent);
+    --accent-text: var(--p-accent-600);
+
+    --focus-ring-color: var(--p-accent-500);
+    --focus-ring-width: 2px;
+    --focus-ring: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+
+    --state-danger: var(--p-danger-600);
+    --state-danger-subtle: var(--p-danger-50);
+    --state-warning: var(--p-warning-700);
+    --state-warning-subtle: color-mix(in srgb, var(--p-warning-400) 18%, transparent);
+    --state-success: var(--p-success-600);
+    --state-success-subtle: var(--p-success-50);
+
+    /* Translucent fills, so one token reads correctly on every surface it lands on. */
+    --state-hover: color-mix(in srgb, var(--p-neutral-1000) 5%, transparent);
+    --state-pressed: color-mix(in srgb, var(--p-neutral-1000) 9%, transparent);
+    --state-selected: var(--accent-subtle);
+
+    --selection-background: color-mix(in srgb, var(--p-accent-400) 30%, transparent);
+    --scrollbar-thumb: color-mix(in srgb, var(--p-neutral-1000) 28%, transparent);
+    --scrollbar-thumb-hover: color-mix(in srgb, var(--p-neutral-1000) 42%, transparent);
+    --backdrop-color: var(--p-neutral-950);
+
+    --shadow-color: var(--p-shadow-color-light);
+    --shadow-raised: var(--p-shadow-1);
+    --shadow-floating: var(--p-shadow-2);
+    --shadow-overlay: var(--p-shadow-3);
+
+    --font-ui: var(--p-font-sans);
+    --font-content: var(--p-font-sans);
+    --font-code: var(--p-font-mono);
+    --text-size-small: var(--p-text-xs);
+    --text-size-ui: var(--p-text-sm);
+    --text-size-content: var(--p-text-md);
+    --text-size-heading: var(--p-text-lg);
+    --line-height-ui: var(--p-leading-tight);
+    --line-height-content: var(--p-leading-relaxed);
+    --font-weight-regular: var(--p-weight-regular);
+    --font-weight-medium: var(--p-weight-medium);
+    --font-weight-strong: var(--p-weight-semibold);
+
+    --space-2xs: var(--p-space-0-5);
+    --space-xs: var(--p-space-1);
+    --space-sm: var(--p-space-2);
+    --space-md: var(--p-space-3);
+    --space-lg: var(--p-space-4);
+    --space-xl: var(--p-space-6);
+    --space-2xl: var(--p-space-8);
+
+    --radius-small: var(--p-radius-sm);
+    --radius-control: var(--p-radius-md);
+    --radius-surface: var(--p-radius-lg);
+    --radius-dialog: var(--p-radius-xl);
+    --radius-pill: var(--p-radius-full);
+
+    --motion-ease: var(--p-ease-standard);
+    --motion-ease-emphasized: var(--p-ease-emphasized);
+    --motion-duration-fast: var(--p-duration-fast);
+    --motion-duration-base: var(--p-duration-base);
+    --motion-duration-slow: var(--p-duration-slow);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --surface-sunken: var(--p-neutral-950);
+        --surface-base: var(--p-neutral-900);
+        --surface-subtle: var(--p-neutral-850);
+        --surface-accented: var(--p-neutral-800);
+        --surface-raised: var(--p-neutral-850);
+        --surface-overlay: var(--p-neutral-800);
+        --surface-inverse: var(--p-neutral-700);
+
+        --text-primary: var(--p-neutral-100);
+        --text-secondary: var(--p-neutral-300);
+        --text-tertiary: var(--p-neutral-400);
+        --text-inverse: var(--p-neutral-50);
+        --text-on-accent: var(--p-neutral-950);
+
+        --border-subtle: var(--p-neutral-750);
+        --border-default: var(--p-neutral-650);
+        --border-strong: var(--p-neutral-500);
+
+        --accent-default: var(--p-accent-400);
+        --accent-hover: var(--p-accent-300);
+        --accent-active: var(--p-accent-200);
+        --accent-subtle: color-mix(in srgb, var(--p-accent-400) 20%, transparent);
+        --accent-text: var(--p-accent-300);
+
+        --focus-ring-color: var(--p-accent-400);
+
+        --state-danger: var(--p-danger-400);
+        --state-danger-subtle: color-mix(in srgb, var(--p-danger-400) 16%, transparent);
+        --state-warning: var(--p-warning-300);
+        --state-warning-subtle: color-mix(in srgb, var(--p-warning-300) 14%, transparent);
+        --state-success: var(--p-success-400);
+        --state-success-subtle: color-mix(in srgb, var(--p-success-400) 16%, transparent);
+
+        --state-hover: color-mix(in srgb, var(--p-neutral-0) 6%, transparent);
+        --state-pressed: color-mix(in srgb, var(--p-neutral-0) 10%, transparent);
+
+        --selection-background: color-mix(in srgb, var(--p-accent-400) 34%, transparent);
+        --scrollbar-thumb: color-mix(in srgb, var(--p-neutral-0) 24%, transparent);
+        --scrollbar-thumb-hover: color-mix(in srgb, var(--p-neutral-0) 38%, transparent);
+        --backdrop-color: var(--p-neutral-1000);
+
+        --shadow-color: var(--p-shadow-color-dark);
+        --shadow-raised: none;
+        --shadow-floating: var(--p-shadow-dark-3);
+        --shadow-overlay: var(--p-shadow-dark-3);
+    }
+}
+
+:root[data-theme="dark"] {
+    --surface-sunken: var(--p-neutral-950);
+    --surface-base: var(--p-neutral-900);
+    --surface-subtle: var(--p-neutral-850);
+    --surface-accented: var(--p-neutral-800);
+    --surface-raised: var(--p-neutral-850);
+    --surface-overlay: var(--p-neutral-800);
+    --surface-inverse: var(--p-neutral-700);
+
+    --text-primary: var(--p-neutral-100);
+    --text-secondary: var(--p-neutral-300);
+    --text-tertiary: var(--p-neutral-400);
+    --text-inverse: var(--p-neutral-50);
+    --text-on-accent: var(--p-neutral-950);
+
+    --border-subtle: var(--p-neutral-750);
+    --border-default: var(--p-neutral-650);
+    --border-strong: var(--p-neutral-500);
+
+    --accent-default: var(--p-accent-400);
+    --accent-hover: var(--p-accent-300);
+    --accent-active: var(--p-accent-200);
+    --accent-subtle: color-mix(in srgb, var(--p-accent-400) 20%, transparent);
+    --accent-text: var(--p-accent-300);
+
+    --focus-ring-color: var(--p-accent-400);
+
+    --state-danger: var(--p-danger-400);
+    --state-danger-subtle: color-mix(in srgb, var(--p-danger-400) 16%, transparent);
+    --state-warning: var(--p-warning-300);
+    --state-warning-subtle: color-mix(in srgb, var(--p-warning-300) 14%, transparent);
+    --state-success: var(--p-success-400);
+    --state-success-subtle: color-mix(in srgb, var(--p-success-400) 16%, transparent);
+
+    --state-hover: color-mix(in srgb, var(--p-neutral-0) 6%, transparent);
+    --state-pressed: color-mix(in srgb, var(--p-neutral-0) 10%, transparent);
+
+    --selection-background: color-mix(in srgb, var(--p-accent-400) 34%, transparent);
+    --scrollbar-thumb: color-mix(in srgb, var(--p-neutral-0) 24%, transparent);
+    --scrollbar-thumb-hover: color-mix(in srgb, var(--p-neutral-0) 38%, transparent);
+    --backdrop-color: var(--p-neutral-1000);
+
+    --shadow-color: var(--p-shadow-color-dark);
+    --shadow-raised: none;
+    --shadow-floating: var(--p-shadow-dark-3);
+    --shadow-overlay: var(--p-shadow-dark-3);
+}
+
+/* Transitions keep a positive duration, so a `transitionend` that JS waits on still fires. */
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --motion-duration-fast: 0.01ms;
+        --motion-duration-base: 0.01ms;
+        --motion-duration-slow: 0.01ms;
+    }
+}

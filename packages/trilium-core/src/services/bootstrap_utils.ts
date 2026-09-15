@@ -93,6 +93,9 @@ function getAppCssNoteIds() {
     return attributes.getNotesWithLabel("appCss").map((note) => note.noteId);
 }
 
+/** The built-in Lumen themes, which the client layers over the Next stylesheets. */
+const LUMEN_THEMES = [ "lumen", "lumen-light", "lumen-dark" ];
+
 function getThemeCssUrl(theme: string, assetPath: string, themeNote: BNote | null) {
     if (theme === "auto") {
         return `${assetPath}/stylesheets/theme.css`;
@@ -107,6 +110,8 @@ function getThemeCssUrl(theme: string, assetPath: string, themeNote: BNote | nul
         return `${assetPath}/stylesheets/theme-next-light.css`;
     } else if (theme === "next-dark") {
         return `${assetPath}/stylesheets/theme-next-dark.css`;
+    } else if (LUMEN_THEMES.includes(theme)) {
+        return `${assetPath}/stylesheets/theme-lumen.css`;
     } else if (!getPlatform().getEnv("TRILIUM_SAFE_MODE") && themeNote) {
         return `api/notes/download/${themeNote.noteId}`;
     }
@@ -115,7 +120,7 @@ function getThemeCssUrl(theme: string, assetPath: string, themeNote: BNote | nul
 }
 
 function getCustomThemeCssUrl(theme: string, themeNote: BNote | null) {
-    if (["auto", "light", "dark", "next", "next-light", "next-dark"].includes(theme)) {
+    if (["auto", "light", "dark", "next", "next-light", "next-dark", ...LUMEN_THEMES].includes(theme)) {
         return undefined;
     }
 

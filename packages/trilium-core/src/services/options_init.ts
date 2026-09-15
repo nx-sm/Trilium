@@ -251,9 +251,11 @@ const defaultOptions: DefaultOption[] = [
             switch (optionsMap.theme) {
                 case "light":
                 case "next-light":
+                case "lumen-light":
                     return "default:vs-code-light";
                 case "dark":
                 case "next-dark":
+                case "lumen-dark":
                 default:
                     return "default:vs-code-dark";
             }

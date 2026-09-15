@@ -1,4 +1,5 @@
 import appContext from "../../components/app_context";
+import { resolveColorScheme } from "../../services/color_scheme";
 import { t } from "../../services/i18n";
 import options from "../../services/options";
 import utils, { isMac } from "../../services/utils";
@@ -90,7 +91,7 @@ const CALL_TO_ACTIONS: CallToAction[] = [
         id: "next_theme",
         title: t("call_to_action.next_theme_title"),
         message: t("call_to_action.next_theme_message"),
-        enabled: () => ![ "next", "next-light", "next-dark" ].includes(options.get("theme")),
+        enabled: () => ![ "modern", "lumen" ].includes(resolveColorScheme(options.get("theme")).family ?? ""),
         buttons: [
             {
                 text: t("call_to_action.next_theme_button"),

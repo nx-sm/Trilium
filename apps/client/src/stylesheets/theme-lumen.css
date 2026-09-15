@@ -1,0 +1,9 @@
+/*
+ * Lumen: a token theme layered over Next. As a built-in theme, `services/theme.ts` loads it after the
+ * Next stylesheets of the matching colour scheme. As a user theme, a code note holding this file
+ * with its imports inlined takes `#appTheme` and `#appThemeBase=next`.
+ */
+
+@import url(./theme-lumen/tokens/primitives.css);
+@import url(./theme-lumen/tokens/semantic.css);
+@import url(./theme-lumen/tokens/aliases.css);

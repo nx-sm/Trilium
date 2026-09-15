@@ -7,7 +7,9 @@
  * `docs/Retheme/Audit.md`, "Screenshot baseline"). Screenshots go to the gitignored `test-output`.
  *
  * Usage: node scripts/retheme/capture-baseline.mts [--label baseline] [--channel msedge]
- *            [--base-url http://127.0.0.1:37999] [--only text-note,options-appearance]
+ *            [--base-url http://127.0.0.1:37999] [--only text-note,options-appearance] [--theme lumen]
+ *
+ * `--theme` sets the `theme` option for the run and restores the previous value afterwards.
  */
 
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -48,6 +50,7 @@ export interface CaptureRun {
 interface Manifest {
     label: string;
     baseUrl: string;
+    theme?: string;
     captured: string[];
     warnings: string[];
     failed: { file: string; error: string }[];
@@ -93,20 +96,28 @@ export async function main() {
             "base-url": { type: "string", default: "http://127.0.0.1:37999" },
             "channel": { type: "string" },
             "only": { type: "string" },
-            "out": { type: "string", default: "test-output/retheme" }
+            "out": { type: "string", default: "test-output/retheme" },
+            "theme": { type: "string" }
         }
     });
     const label = values.label ?? "baseline";
     const baseUrl = values["base-url"] ?? "http://127.0.0.1:37999";
     const outputRoot = resolve(ROOT, values.out ?? "test-output/retheme", label);
     const runs = buildCaptureMatrix(SURFACES, values.only?.split(","));
-    const manifest: Manifest = { label, baseUrl, captured: [], warnings: [], failed: [] };
+    const manifest: Manifest = { label, baseUrl, theme: values.theme, captured: [], warnings: [], failed: [] };
 
     const browser = await chromium.launch({ channel: values.channel });
     try {
-        for (const run of runs) {
-            console.log(`${run.directory}: ${run.surfaces.length} surfaces`);
-            await captureRun(browser, run, baseUrl, outputRoot, manifest);
+        const previousTheme = values.theme ? await setThemeOption(browser, baseUrl, values.theme) : undefined;
+        try {
+            for (const run of runs) {
+                console.log(`${run.directory}: ${run.surfaces.length} surfaces`);
+                await captureRun(browser, run, baseUrl, outputRoot, manifest);
+            }
+        } finally {
+            if (previousTheme) {
+                await setThemeOption(browser, baseUrl, previousTheme);
+            }
         }
     } finally {
         await browser.close();
@@ -188,7 +199,8 @@ async function showSurface(page: Page, surface: Surface) {
         await page.evaluate(async (notePath) => {
             await (globalThis as unknown as GlobWindow).glob?.appContext.tabManager.getActiveContext()?.setNote(notePath);
         }, surface.notePath);
-        rendered = await page.locator(".note-detail-printable.visible").first()
+        // Collections render through `.note-list-widget` rather than a printable note detail.
+        rendered = await page.locator(".note-detail-printable.visible, .note-list-widget").first()
             .waitFor({ state: "visible", timeout: 15_000 })
             .then(() => true, () => false);
         await page.waitForLoadState("networkidle");
@@ -210,6 +222,29 @@ async function showSurface(page: Page, surface: Surface) {
 
     await page.waitForTimeout(SETTLE_MS);
     return rendered;
+}
+
+/** Saves the `theme` option through the page, as the e2e `setOption` helper does, and resolves to the previous value. */
+async function setThemeOption(browser: Browser, baseUrl: string, theme: string) {
+    const context = await browser.newContext();
+    try {
+        const page = await context.newPage();
+        await loadApp(page, baseUrl);
+        return await page.evaluate(async (value) => {
+            const glob = (globalThis as unknown as GlobWindow).glob;
+            const previous = glob?.theme ?? "next";
+            const response = await fetch(`api/options/theme/${encodeURIComponent(value)}`, {
+                method: "PUT",
+                headers: { "x-csrf-token": glob?.csrfToken ?? "" }
+            });
+            if (!response.ok) {
+                throw new Error(`Saving the theme option failed with ${response.status}`);
+            }
+            return previous;
+        }, theme);
+    } finally {
+        await context.close();
+    }
 }
 
 async function loadApp(page: Page, baseUrl: string) {
@@ -252,6 +287,8 @@ function firstLine(error: unknown) {
  */
 interface GlobWindow {
     glob?: {
+        theme?: string;
+        csrfToken?: string;
         appContext: {
             triggerCommand(name: string, data?: Record<string, unknown>): Promise<unknown>;
             tabManager: { getActiveContext(): { setNote(notePath: string): Promise<unknown> } | null };
