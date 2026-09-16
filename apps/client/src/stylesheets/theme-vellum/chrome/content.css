@@ -12,6 +12,7 @@
 
 html:root .ck-content {
     --ck-content-line-height: var(--line-height-content);
+    --ck-content-font-size: var(--v-content-scale);
 
     line-height: var(--line-height-content);
 }

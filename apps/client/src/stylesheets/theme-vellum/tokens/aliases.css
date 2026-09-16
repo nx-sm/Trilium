@@ -1,0 +1,15 @@
+/*
+ * The sizes Vellum sets, as Lumen's aliases do: at `html:root`, reading semantic tokens, so they
+ * outrank Next whichever order the stylesheets load in.
+ *
+ * Type size is a theme's to choose. `/api/fonts` serves nothing at all until the reader turns on "Use
+ * different fonts", and what it serves then is written on `body`, which outranks every rule here — so
+ * a reader who sets their own sizes still gets them. Until they do, these are the sizes, and Next's
+ * are `normal`: a 16px interface, where a document app's is 14.
+ */
+
+html:root {
+    --main-font-size: var(--text-size-ui);
+    --tree-font-size: var(--text-size-ui);
+    --detail-font-size: var(--text-size-content);
+}

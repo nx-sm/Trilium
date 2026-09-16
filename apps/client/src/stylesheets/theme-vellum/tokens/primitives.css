@@ -114,4 +114,11 @@
     --v-rhythm-heading-before: 1.4em;
     --v-rhythm-heading-after: 0.4em;
     --v-rhythm-paragraph-after: 0.75em;
+
+    /*
+     * The note's text at the size the note is set in. `style.css` gives `.ck-content` 1.1em, which
+     * multiplies whatever `--detail-font-size` says; Vellum sets the size through that token instead,
+     * so one value governs. An em rather than a rem, so a reader's own font size still scales it.
+     */
+    --v-content-scale: 1em;
 }

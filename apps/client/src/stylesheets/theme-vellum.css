@@ -19,6 +19,7 @@
 
 @import url(./theme-vellum/tokens/primitives.css);
 @import url(./theme-vellum/tokens/semantic.css);
+@import url(./theme-vellum/tokens/aliases.css);
 
 @import url(./theme-vellum/chrome/content.css);
 @import url(./theme-vellum/chrome/tree.css);

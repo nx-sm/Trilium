@@ -56,18 +56,35 @@ very fault this theme found in `--line-height-content`.
 
 ## What it deliberately leaves alone
 
-These are the three levers a theme should not pull, and each is a deliberate omission rather than an
-oversight:
+Each of these is a deliberate omission rather than an oversight:
 
-- **Font sizes and families.** `--main-font-size`, `--tree-font-size` and the `--detail-font-*` pair
-  come from the user's font options through `/api/fonts`, and Lumen's keep-list leaves them at Next's
-  values. A theme that set them would silently overrule a setting the user chose.
+- **Font families.** `--main-font-family` and its siblings stay as Lumen leaves them: Vellum changes
+  the size of the type, not the typeface.
 - **The width of the note.** `root_container.ts` sets `--preferred-max-content-width` as an inline
   style on `body` from the `maxContentWidth` option. Vellum suits a narrower column, but that is the
-  user's setting to make.
+  reader's setting to make.
 - **Note tree row geometry.** FancyTree derives its drop zones from row height and vertical padding
-  ([Selector coupling](Selector%20coupling.md)), so the sidebar can be made quieter but not shorter.
-  Row height is `em`-based, so a smaller tree font shrinks rows without any theme change.
+  ([Selector coupling](Selector%20coupling.md)), so Vellum changes neither. The rows come out shorter
+  anyway, because their height is `2.4em` of a tree that now sets its type smaller.
+
+## Type size
+
+Next leaves every size at `normal`, which makes Trilium a 16px interface, and the note larger still:
+`style.css` gives `.ck-content` a further `1.1em`, so its text lands near 17.6px. Vellum sets the sizes
+a document app uses, in `theme-vellum/tokens/aliases.css` and beside them in the chrome:
+
+| Variable | Vellum | Next |
+| --- | --- | --- |
+| `--main-font-size` | `--text-size-ui` (0.875rem) | `normal` |
+| `--tree-font-size` | `--text-size-ui` (0.875rem) | `normal` |
+| `--detail-font-size` | `--text-size-content` (1rem) | `normal` |
+| `--ck-content-font-size` | `--v-content-scale` (1em) | 1.1em |
+
+Setting them is a theme's business rather than an intrusion. `/api/fonts` serves an empty stylesheet
+until the reader turns on "Use different fonts", and what it serves then is written on `body`, which
+outranks every `html:root` rule here — so a reader who chooses their own sizes keeps them, and everyone
+else gets the theme's. The sidebar's rows follow the tree's type down, to about 34px from 38px, with no
+change to the geometry FancyTree measures.
 
 ## What it is not
 

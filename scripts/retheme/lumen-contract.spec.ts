@@ -63,6 +63,23 @@ describe("Vellum theme contract", () => {
     const semantic = definitionsIn(`${VELLUM_TOKENS}/semantic.css`);
     const semanticNames = new Set(semantic.map((definition) => definition.name));
     const lumenSemantic = new Set(definitionsIn(`${TOKENS}/semantic.css`).map((definition) => definition.name));
+    const aliases = definitionsIn(`${VELLUM_TOKENS}/aliases.css`);
+    const contract = new Set(Object.values(THEME_FILES)
+        .flatMap((file) => definitionsIn(file))
+        .filter((definition) => definition.global)
+        .map((definition) => definition.name));
+
+    it("sets sizes through contract variables, at html:root, from semantic tokens", () => {
+        expect(aliases.length).toBeGreaterThan(0);
+
+        for (const alias of aliases) {
+            expect(alias.selector, alias.name).toBe("html:root");
+            expect(contract.has(alias.name), alias.name).toBe(true);
+            for (const reference of referencesIn(alias.value)) {
+                expect(lumenSemantic.has(reference) || semanticNames.has(reference), `${alias.name} → ${reference}`).toBe(true);
+            }
+        }
+    });
 
     it("redeclares only tokens Lumen declares, and builds them from Vellum's own primitives", () => {
         expect(semanticNames.size).toBeGreaterThan(30);
