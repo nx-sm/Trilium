@@ -92,8 +92,8 @@ phase depends on it. Baseline: `main` at `c775199ba6` (v0.105.0), audited 15/09/
 
 ## Screenshot baseline
 
-`scripts/retheme/capture-baseline.mts` captures surfaces in light and dark: 19 on the desktop layout at
-768, 1280 and 1920 px, and 5 of them on the mobile layout at 360 and 768 px — 134 screenshots. It drives
+`scripts/retheme/capture-baseline.mts` captures surfaces in light and dark: 20 on the desktop layout at
+768, 1280 and 1920 px, and 6 of them on the mobile layout at 360 and 768 px — 144 screenshots. It drives
 a server on the e2e fixture document, which keeps every write in memory:
 
 ```bash

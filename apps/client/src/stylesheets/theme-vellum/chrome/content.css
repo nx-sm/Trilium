@@ -31,3 +31,23 @@ html:root .inline-title > .inline-title-row {
 html:root .inline-title .title-details {
     margin-top: var(--space-xs);
 }
+
+/*
+ * Headings carry weight rather than size. Next draws them at 300, which reads as a web page; a
+ * document sets them in the weight of its own bold text, and gives each one more room above than
+ * below so it binds to the text it introduces. Every value is relative to the note's type, which
+ * stays the user's to choose.
+ */
+html:root .ck-content :is(h1, h2, h3, h4, h5, h6) {
+    margin-block: var(--v-rhythm-heading-before) var(--v-rhythm-heading-after);
+    font-weight: var(--font-weight-strong);
+    line-height: var(--line-height-ui);
+}
+
+html:root .ck-content > :is(h1, h2, h3, h4, h5, h6):first-child {
+    margin-block-start: 0;
+}
+
+html:root .ck-content > p {
+    margin-block-end: var(--v-rhythm-paragraph-after);
+}

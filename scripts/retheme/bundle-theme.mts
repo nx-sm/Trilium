@@ -1,9 +1,13 @@
 /**
- * Bundles the Lumen theme into one stylesheet that installs as a user theme (re-theme TDD §7,
+ * Bundles a built-in token theme into one stylesheet that installs as a user theme (re-theme TDD §7,
  * rollout step 1). A user theme is served from a note download URL, where the relative imports and
- * font URLs of `theme-lumen.css` cannot resolve, so every import is inlined and every font embedded.
+ * font URLs of the theme's stylesheets cannot resolve, so every import is inlined and every font
+ * embedded.
  *
- * Usage: node scripts/retheme/bundle-lumen.mts [--out dist/retheme/lumen-theme.css]
+ * Vellum is a layer over Lumen, so its bundle carries both, in the order they cascade and with each
+ * file inlined once.
+ *
+ * Usage: node scripts/retheme/bundle-theme.mts [--theme lumen|vellum] [--out dist/retheme/<theme>-theme.css]
  */
 
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -13,21 +17,28 @@ import { parseArgs } from "node:util";
 
 const SCRIPT_PATH = fileURLToPath(import.meta.url);
 const ROOT = resolve(dirname(SCRIPT_PATH), "..", "..");
-const ENTRY = "apps/client/src/stylesheets/theme-lumen.css";
-const DEFAULT_OUTPUT = "dist/retheme/lumen-theme.css";
+const STYLESHEETS = "apps/client/src/stylesheets";
 
-const HEADER = `/*
- * Lumen, a token theme for Trilium Notes, bundled from ${ENTRY}.
- * SPDX-License-Identifier: AGPL-3.0-only
- *
- * To install it as a user theme, create a CSS code note with this content, add the labels
- * #appTheme=lumen-standalone and #appThemeBase=next, and choose it under Settings > Appearance.
- * As a user theme it follows the operating system's colour scheme.
- *
- * Its interface icons embed a subset of Tabler Icons: MIT License, Copyright (c) 2020-2026 Paweł Kuna.
- */
+export interface ThemeBundle {
+    /** The theme's stylesheets, in the order the app loads them. */
+    entries: string[];
+    /** The value of the `#appTheme` label the install steps name. */
+    label: string;
+    description: string;
+}
 
-`;
+export const THEMES: Record<string, ThemeBundle> = {
+    lumen: {
+        entries: [ `${STYLESHEETS}/theme-lumen.css` ],
+        label: "lumen-standalone",
+        description: "Lumen, a token theme for Trilium Notes"
+    },
+    vellum: {
+        entries: [ `${STYLESHEETS}/theme-lumen.css`, `${STYLESHEETS}/theme-vellum.css` ],
+        label: "vellum-standalone",
+        description: "Vellum, a document-first token theme for Trilium Notes, layered over Lumen"
+    }
+};
 
 export interface BundleReader {
     readFile: (path: string) => string;
@@ -36,9 +47,20 @@ export interface BundleReader {
 }
 
 export function main() {
-    const { values } = parseArgs({ options: { out: { type: "string", default: DEFAULT_OUTPUT } } });
-    const output = resolve(ROOT, values.out ?? DEFAULT_OUTPUT);
-    const css = HEADER + inlineImports(join(ROOT, ENTRY), {
+    const { values } = parseArgs({
+        options: {
+            theme: { type: "string", default: "lumen" },
+            out: { type: "string" }
+        }
+    });
+    const name = values.theme ?? "lumen";
+    const theme = THEMES[name];
+    if (!theme) {
+        throw new Error(`Unknown theme '${name}'; expected one of ${Object.keys(THEMES).join(", ")}.`);
+    }
+
+    const output = resolve(ROOT, values.out ?? `dist/retheme/${name}-theme.css`);
+    const css = header(theme) + bundle(theme, {
         readFile: (path) => readFileSync(path, "utf-8"),
         readBinary: (path) => readFileSync(path)
     });
@@ -46,6 +68,12 @@ export function main() {
     mkdirSync(dirname(output), { recursive: true });
     writeFileSync(output, css);
     console.log(`Wrote ${relative(ROOT, output)} (${css.length} bytes).`);
+}
+
+/** Inlines a theme's stylesheets in cascade order, each file only the first time it is reached. */
+export function bundle(theme: ThemeBundle, reader: BundleReader) {
+    const seen = new Set<string>();
+    return theme.entries.map((entry) => inlineImports(join(ROOT, entry), reader, seen)).join("\n");
 }
 
 /**
@@ -81,6 +109,21 @@ export function embedUrls(css: string, baseDir: string, readBinary: (path: strin
         }
         return `url(data:${mediaType};base64,${Buffer.from(readBinary(resolve(baseDir, target))).toString("base64")})`;
     });
+}
+
+function header(theme: ThemeBundle) {
+    return `/*
+ * ${theme.description}, bundled from ${theme.entries.join(" and ")}.
+ * SPDX-License-Identifier: AGPL-3.0-only
+ *
+ * To install it as a user theme, create a CSS code note with this content, add the labels
+ * #appTheme=${theme.label} and #appThemeBase=next, and choose it under Settings > Appearance.
+ * As a user theme it follows the operating system's colour scheme.
+ *
+ * Its interface icons embed a subset of Tabler Icons: MIT License, Copyright (c) 2020-2026 Paweł Kuna.
+ */
+
+`;
 }
 
 const IMPORT = /@import\s+url\(\s*["']?([^"')]+)["']?\s*\)\s*;/g;

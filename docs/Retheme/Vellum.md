@@ -43,6 +43,17 @@ no rule reads it, so the value never reached the page. Vellum applies it to `.ck
 CKEditor puts on both the editable and the read-only body, and carries the same value in
 `--ck-content-line-height` for anything reading the variable instead.
 
+**Headings carry weight, not size.** Next draws `h1`–`h6` at weight 300, which reads as a web page;
+Vellum sets them in the weight of its own bold text and gives each more room above than below, so a
+heading binds to the text it introduces. The first heading of a note keeps no gap above it.
+
+Those three measurements — the room above and below a heading, and the gap after a paragraph — are
+named in `theme-vellum/tokens/primitives.css` as `--v-rhythm-*` and read straight from the chrome, the
+one place Vellum's chrome reads a primitive. They are ems of the note's own type, so they follow the
+reader's font size, and no semantic token carries type-relative spacing: `--space-*` is in pixels.
+Declaring one in Lumen that only Vellum reads would leave Lumen with an unread token, which is the
+very fault this theme found in `--line-height-content`.
+
 ## What it deliberately leaves alone
 
 These are the three levers a theme should not pull, and each is a deliberate omission rather than an
@@ -73,8 +84,17 @@ the literal fallbacks it carries for when neither theme is active remain Lumen's
 
 ## Standalone bundle
 
-`scripts/retheme/bundle-lumen.mts` bundles Lumen only. Vellum has no single-file build yet; as a user
-theme it would need the same treatment, with its own imports inlined on top of Lumen's.
+```bash
+node scripts/retheme/bundle-theme.mts --theme vellum
+```
+
+writes `dist/retheme/vellum-theme.css` (gitignored): Lumen's stylesheets inlined first, then Vellum's,
+each file carried once, with the icon font embedded as a data URL. It is 87 KB gzipped against Lumen's
+83 KB — the difference is Vellum's own layer, and about 73 KB of either is the font.
+
+Install it as a CSS code note labelled `#appTheme=vellum-standalone` and `#appThemeBase=next`, chosen
+under Settings → Appearance. As a user theme it follows the operating system's colour scheme, because
+Trilium offers no colour-scheme choice for custom themes.
 
 ## Guards
 

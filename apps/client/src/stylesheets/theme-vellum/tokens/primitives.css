@@ -103,4 +103,15 @@
     /* Rhythm: the space a reading surface needs, which is more than a dense app's. */
     --v-leading-tight: 1.45;
     --v-leading-relaxed: 1.75;
+
+    /*
+     * Content rhythm, in ems of the note's own type so it follows the reader's font size: the room a
+     * heading takes above and below, and the gap after a paragraph. These are the one place Vellum's
+     * chrome reads a primitive. No semantic token carries type-relative spacing — `--space-*` is in
+     * pixels — and declaring one in Lumen that only Vellum reads would leave Lumen with an unread
+     * token, which is the fault this theme just fixed in `--line-height-content`.
+     */
+    --v-rhythm-heading-before: 1.4em;
+    --v-rhythm-heading-after: 0.4em;
+    --v-rhythm-paragraph-after: 0.75em;
 }

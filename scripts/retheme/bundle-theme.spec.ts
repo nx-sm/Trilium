@@ -1,11 +1,14 @@
 import { readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
-import { embedUrls, inlineImports } from "./bundle-lumen.mjs";
+import { bundle, type BundleReader, embedUrls, inlineImports, THEMES } from "./bundle-theme.mjs";
 
-const ROOT = resolve(import.meta.dirname, "..", "..");
+const realReader: BundleReader = {
+    readFile: (path) => readFileSync(path, "utf-8"),
+    readBinary: (path) => readFileSync(path)
+};
 
 describe("inlineImports", () => {
     const files = Object.fromEntries(Object.entries({
@@ -30,12 +33,11 @@ describe("inlineImports", () => {
         expect(() => inlineImports("/theme/tokens/a.css", { readFile: (path) => path.endsWith("a.css") ? "@import url(./gone.css);" : read(path) }))
             .toThrow("Missing");
     });
+});
 
-    it("bundles the real theme into a stylesheet with no import left and its icon font embedded", () => {
-        const css = inlineImports(join(ROOT, "apps/client/src/stylesheets/theme-lumen.css"), {
-            readFile: (path) => readFileSync(path, "utf-8"),
-            readBinary: (path) => readFileSync(path)
-        });
+describe("bundle", () => {
+    it("bundles Lumen into a stylesheet with no import left and its icon font embedded", () => {
+        const css = bundle(THEMES.lumen, realReader);
 
         expect(css).not.toContain("@import");
         expect(css).toContain("--p-neutral-0:");
@@ -43,6 +45,22 @@ describe("inlineImports", () => {
         expect(css).toContain(".note-detail-relation-map .note-box");
         expect(css).toMatch(/src: url\(data:font\/woff;base64,[A-Za-z0-9+/]+=*\) format\("woff"\);/);
         expect(css).not.toMatch(/url\((?!data:)/);
+    });
+
+    it("bundles Vellum over Lumen, carrying each file once", () => {
+        const css = bundle(THEMES.vellum, realReader);
+
+        expect(css).not.toContain("@import");
+        // Lumen underneath, once, and Vellum's own layer after it.
+        expect(css.match(/--p-neutral-0:/g)).toHaveLength(1);
+        expect(css.match(/--v-neutral-0:/g)).toHaveLength(1);
+        expect(css.indexOf("--v-neutral-0:")).toBeGreaterThan(css.indexOf("--p-neutral-0:"));
+        expect(css).toContain("line-height: var(--line-height-content);");
+    });
+
+    it("names each theme's own install label", () => {
+        expect(THEMES.lumen.label).toBe("lumen-standalone");
+        expect(THEMES.vellum.label).toBe("vellum-standalone");
     });
 });
 

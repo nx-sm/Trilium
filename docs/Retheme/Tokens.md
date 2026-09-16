@@ -172,10 +172,11 @@ node scripts/retheme/build-lumen-icons.mts --tabler package
 
 The TDD's first rollout step ships Lumen as a user theme, adoptable without a fork. A user theme is
 served from a note download URL, where the relative imports and font URL of `theme-lumen.css` cannot
-resolve, so `scripts/retheme/bundle-lumen.mts` inlines the imports and embeds the icon font as a data URL:
+resolve, so `scripts/retheme/bundle-theme.mts` inlines the imports and embeds the icon font as a data
+URL. It takes `--theme`, because [Vellum](Vellum.md) bundles as a user theme too:
 
 ```bash
-node scripts/retheme/bundle-lumen.mts
+node scripts/retheme/bundle-theme.mts --theme lumen
 ```
 
 It writes `dist/retheme/lumen-theme.css` (gitignored; about 83 KB gzipped, 73 KB of it the icon font) with

@@ -64,6 +64,8 @@ const DESKTOP: Layout[] = [ "desktop" ];
 /** Surfaces on the e2e fixture document (`packages/trilium-core/src/test/fixtures/document.db`). */
 export const SURFACES: Surface[] = [
     { id: "text-note", layouts: BOTH, notePath: "v8ZW4gPAK7Yp" },
+    // Prose with headings, paragraphs and a table of contents: the surface a reading theme is judged on.
+    { id: "text-note-rich", layouts: BOTH, notePath: "UC1vWIqVnPMX" },
     { id: "code-note", layouts: DESKTOP, notePath: "laKbCH4w8B9h" },
     { id: "mermaid-note", layouts: DESKTOP, notePath: "OTSWYwwvpp21" },
     { id: "mind-map-note", layouts: DESKTOP, notePath: "qlLRRwU3qlkR" },
