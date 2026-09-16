@@ -53,6 +53,39 @@ describe("Lumen theme contract", () => {
     });
 });
 
+/**
+ * Vellum layers over Lumen: it redeclares semantic tokens and nothing else, so Lumen's aliases carry
+ * its values to the theme contract without Vellum naming a contract variable itself.
+ */
+describe("Vellum theme contract", () => {
+    const VELLUM_TOKENS = "apps/client/src/stylesheets/theme-vellum/tokens";
+    const primitives = new Set(definitionsIn(`${VELLUM_TOKENS}/primitives.css`).map((definition) => definition.name));
+    const semantic = definitionsIn(`${VELLUM_TOKENS}/semantic.css`);
+    const semanticNames = new Set(semantic.map((definition) => definition.name));
+    const lumenSemantic = new Set(definitionsIn(`${TOKENS}/semantic.css`).map((definition) => definition.name));
+
+    it("redeclares only tokens Lumen declares, and builds them from Vellum's own primitives", () => {
+        expect(semanticNames.size).toBeGreaterThan(30);
+        expect([ ...semanticNames ].filter((name) => !lumenSemantic.has(name))).toEqual([]);
+
+        for (const definition of semantic) {
+            for (const reference of referencesIn(definition.value)) {
+                expect(primitives.has(reference) || semanticNames.has(reference), `${definition.name} → ${reference}`).toBe(true);
+            }
+        }
+    });
+
+    it("declares identical dark tiers, each a subset of the light one", () => {
+        const namesIn = (selector: string) => semantic.filter((d) => d.selector === selector).map((d) => d.name).sort();
+        const osDark = namesIn(":root:not([data-theme=\"light\"])");
+
+        expect(osDark.length).toBeGreaterThan(20);
+        expect(namesIn(":root[data-theme=\"dark\"]")).toEqual(osDark);
+        const light = new Set(namesIn(":root"));
+        expect(osDark.filter((name) => !light.has(name))).toEqual([]);
+    });
+});
+
 function definitionsIn(file: string): VariableDefinition[] {
     return scanStylesheet(readFileSync(join(ROOT, file), "utf-8"), file).definitions;
 }

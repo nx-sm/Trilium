@@ -115,7 +115,10 @@ describe("bootstrap_utils (real DB)", () => {
             "next-dark": `${ASSET_PATH}/stylesheets/theme-next-dark.css`,
             lumen: `${ASSET_PATH}/stylesheets/theme-lumen.css`,
             "lumen-light": `${ASSET_PATH}/stylesheets/theme-lumen.css`,
-            "lumen-dark": `${ASSET_PATH}/stylesheets/theme-lumen.css`
+            "lumen-dark": `${ASSET_PATH}/stylesheets/theme-lumen.css`,
+            vellum: `${ASSET_PATH}/stylesheets/theme-vellum.css`,
+            "vellum-light": `${ASSET_PATH}/stylesheets/theme-vellum.css`,
+            "vellum-dark": `${ASSET_PATH}/stylesheets/theme-vellum.css`
         };
 
         for (const [theme, expected] of Object.entries(expectations)) {

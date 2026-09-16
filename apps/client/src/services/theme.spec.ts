@@ -72,6 +72,12 @@ describe("getThemeStyle", () => {
         expect(getThemeStyle()).toBe("light");
         setTheme("lumen-dark");
         expect(getThemeStyle()).toBe("dark");
+        setTheme("vellum");
+        expect(getThemeStyle()).toBe("auto");
+        setTheme("vellum-light");
+        expect(getThemeStyle()).toBe("light");
+        setTheme("vellum-dark");
+        expect(getThemeStyle()).toBe("dark");
 
         // None of the explicit branches should fall through to computed styles.
         expect(computed).not.toHaveBeenCalled();
@@ -171,6 +177,25 @@ describe("getConfiguredThemeStylesheets", () => {
         expect(getConfiguredThemeStylesheets(STYLESHEETS_PATH, "lumen-dark")).toEqual([
             { href: `${STYLESHEETS_PATH}/theme-next-dark.css` },
             { href: `${STYLESHEETS_PATH}/theme-lumen.css` }
+        ]);
+    });
+
+    it("layers Vellum over Lumen, which stays over the Next stylesheets", () => {
+        expect(getConfiguredThemeStylesheets(STYLESHEETS_PATH, "vellum")).toEqual([
+            { href: `${STYLESHEETS_PATH}/theme-next-light.css` },
+            { href: `${STYLESHEETS_PATH}/theme-next-dark.css`, media: "(prefers-color-scheme: dark)" },
+            { href: `${STYLESHEETS_PATH}/theme-lumen.css` },
+            { href: `${STYLESHEETS_PATH}/theme-vellum.css` }
+        ]);
+        expect(getConfiguredThemeStylesheets(STYLESHEETS_PATH, "vellum-light")).toEqual([
+            { href: `${STYLESHEETS_PATH}/theme-next-light.css` },
+            { href: `${STYLESHEETS_PATH}/theme-lumen.css` },
+            { href: `${STYLESHEETS_PATH}/theme-vellum.css` }
+        ]);
+        expect(getConfiguredThemeStylesheets(STYLESHEETS_PATH, "vellum-dark")).toEqual([
+            { href: `${STYLESHEETS_PATH}/theme-next-dark.css` },
+            { href: `${STYLESHEETS_PATH}/theme-lumen.css` },
+            { href: `${STYLESHEETS_PATH}/theme-vellum.css` }
         ]);
     });
 

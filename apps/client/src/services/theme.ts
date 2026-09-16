@@ -65,13 +65,18 @@ export function getConfiguredThemeStylesheets(stylesheetsPath: string, theme: st
         return [{ href: `${stylesheetsPath}/theme-next-dark.css` }];
     }
 
-    // Lumen is a token layer over the Next stylesheets of the same colour scheme.
+    // Lumen is a token layer over the Next stylesheets of the same colour scheme, and Vellum a
+    // second token layer over Lumen.
     const { family, scheme } = resolveColorScheme(theme);
-    if (family === "lumen") {
-        return [
+    if (family === "lumen" || family === "vellum") {
+        const refs = [
             ...getConfiguredThemeStylesheets(stylesheetsPath, THEME_FAMILY_SCHEMES.modern[scheme]),
             { href: `${stylesheetsPath}/theme-lumen.css` }
         ];
+        if (family === "vellum") {
+            refs.push({ href: `${stylesheetsPath}/theme-vellum.css` });
+        }
+        return refs;
     }
 
     if (theme !== "light" && customThemeCssUrl) {

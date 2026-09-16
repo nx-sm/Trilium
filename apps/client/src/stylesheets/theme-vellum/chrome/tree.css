@@ -1,0 +1,11 @@
+/*
+ * The note tree. Row height, vertical padding and border width feed FancyTree's drop zones, and
+ * `ul.fancytree-container li` has `contain: layout paint`, so Vellum changes none of the geometry.
+ *
+ * What it changes is how the active row is marked: Lumen draws an accent bar inside Next's
+ * absolutely positioned `::before`, where a document surface marks the row with its tint alone.
+ */
+
+html:root :is(#left-pane, .tree-popup-sidebar) span.fancytree-node.fancytree-active::before {
+    border-inline-start: none;
+}

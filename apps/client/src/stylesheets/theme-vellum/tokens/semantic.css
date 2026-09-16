@@ -1,0 +1,218 @@
+/*
+ * Vellum semantic tokens. Vellum loads after Lumen and redeclares the same semantic layer, so every
+ * alias Lumen points at the theme contract follows without Vellum naming a single contract variable.
+ *
+ * The three tiers match Lumen's, and `lumen-contract.spec.ts` checks that both dark tiers declare the
+ * same tokens:
+ *
+ *   :root                                                          light, the default
+ *   (prefers-color-scheme: dark) :root:not([data-theme="light"])    dark when the OS asks for it
+ *   :root[data-theme="dark"]                                        dark by explicit choice
+ *
+ * What differs from Lumen is the intent: the note surface is the brightest thing on screen, the
+ * chrome sits a step below it, and separation comes from tint rather than from lines.
+ */
+
+:root {
+    /* The app chrome is the tinted ground; the note is the white page laid on it. */
+    --surface-sunken: var(--v-neutral-100);
+    --surface-base: var(--v-neutral-0);
+    --surface-subtle: var(--v-neutral-50);
+    --surface-accented: var(--v-neutral-150);
+    --surface-raised: var(--v-neutral-0);
+    --surface-overlay: var(--v-neutral-0);
+    --surface-inverse: var(--v-neutral-900);
+    --surface-emphasis: var(--v-neutral-600);
+    --text-on-emphasis: var(--v-neutral-0);
+
+    --text-primary: var(--v-neutral-900);
+    --text-secondary: var(--v-neutral-700);
+    --text-tertiary: var(--v-neutral-600);
+    --text-inverse: var(--v-neutral-0);
+    --text-on-accent: var(--v-neutral-0);
+
+    /* Borders recede: the subtle step is nearly the background, so panels read as tint changes. */
+    --border-subtle: var(--v-neutral-150);
+    --border-default: var(--v-neutral-200);
+    --border-strong: var(--v-neutral-500);
+
+    --accent-default: var(--v-accent-600);
+    --accent-hover: var(--v-accent-700);
+    --accent-active: var(--v-accent-800);
+    --accent-subtle: color-mix(in srgb, var(--v-accent-500) 12%, transparent);
+    --accent-text: var(--v-accent-700);
+
+    --focus-ring-color: var(--v-accent-500);
+    --focus-ring-width: 2px;
+    --focus-ring: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+
+    --state-danger: var(--v-danger-600);
+    --state-danger-subtle: var(--v-danger-50);
+    --state-warning: var(--v-warning-700);
+    --state-warning-subtle: color-mix(in srgb, var(--v-warning-400) 18%, transparent);
+    --state-success: var(--v-success-600);
+    --state-success-subtle: var(--v-success-50);
+
+    /* Interaction fills are warm greys rather than accent tints, so rows do not flash blue. */
+    --state-hover: color-mix(in srgb, var(--v-neutral-1000) 5%, transparent);
+    --state-pressed: color-mix(in srgb, var(--v-neutral-1000) 9%, transparent);
+    /* The selected fill carries the active tree row on its own, so it steps clear of both the hover
+       fill and the sidebar's own tint. */
+    --state-selected: color-mix(in srgb, var(--v-neutral-1000) 12%, transparent);
+
+    --selection-background: color-mix(in srgb, var(--v-accent-400) 28%, transparent);
+    --scrollbar-thumb: color-mix(in srgb, var(--v-neutral-1000) 22%, transparent);
+    --scrollbar-thumb-hover: color-mix(in srgb, var(--v-neutral-1000) 36%, transparent);
+    --backdrop-color: var(--v-neutral-950);
+
+    --code-keyword: var(--v-violet-600);
+    --code-string: var(--v-success-700);
+    --code-number: var(--v-warning-700);
+    --code-function: var(--v-accent-600);
+    --code-type: var(--v-teal-700);
+    --code-property: var(--v-danger-700);
+    --code-comment: var(--v-neutral-600);
+    --code-punctuation: var(--v-neutral-700);
+    --code-heading: var(--v-accent-700);
+    --code-link: var(--v-accent-600);
+
+    --shadow-color: var(--v-shadow-color-light);
+    --shadow-raised: var(--v-shadow-1);
+    --shadow-floating: var(--v-shadow-2);
+    --shadow-overlay: var(--v-shadow-3);
+
+    --radius-small: var(--v-radius-sm);
+    --radius-control: var(--v-radius-md);
+    --radius-surface: var(--v-radius-lg);
+    --radius-dialog: var(--v-radius-xl);
+
+    /* Reading rhythm: looser than Lumen's, which is most of what makes a page feel unhurried. */
+    --line-height-ui: var(--v-leading-tight);
+    --line-height-content: var(--v-leading-relaxed);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --surface-sunken: var(--v-neutral-950);
+        --surface-base: var(--v-neutral-925);
+        --surface-subtle: var(--v-neutral-900);
+        --surface-accented: var(--v-neutral-850);
+        --surface-raised: var(--v-neutral-900);
+        --surface-overlay: var(--v-neutral-850);
+        --surface-inverse: var(--v-neutral-700);
+        --surface-emphasis: var(--v-neutral-700);
+        --text-on-emphasis: var(--v-neutral-50);
+
+        --text-primary: var(--v-neutral-100);
+        --text-secondary: var(--v-neutral-300);
+        --text-tertiary: var(--v-neutral-400);
+        --text-inverse: var(--v-neutral-50);
+        --text-on-accent: var(--v-neutral-950);
+
+        --border-subtle: var(--v-neutral-850);
+        --border-default: var(--v-neutral-750);
+        --border-strong: var(--v-neutral-500);
+
+        --accent-default: var(--v-accent-400);
+        --accent-hover: var(--v-accent-300);
+        --accent-active: var(--v-accent-200);
+        --accent-subtle: color-mix(in srgb, var(--v-accent-400) 18%, transparent);
+        --accent-text: var(--v-accent-300);
+
+        --focus-ring-color: var(--v-accent-400);
+
+        --state-danger: var(--v-danger-400);
+        --state-danger-subtle: color-mix(in srgb, var(--v-danger-500) 22%, transparent);
+        --state-warning: var(--v-warning-300);
+        --state-warning-subtle: color-mix(in srgb, var(--v-warning-400) 20%, transparent);
+        --state-success: var(--v-success-300);
+        --state-success-subtle: color-mix(in srgb, var(--v-success-500) 22%, transparent);
+
+        --state-hover: color-mix(in srgb, var(--v-neutral-0) 7%, transparent);
+        --state-pressed: color-mix(in srgb, var(--v-neutral-0) 11%, transparent);
+        --state-selected: color-mix(in srgb, var(--v-neutral-0) 15%, transparent);
+
+        --selection-background: color-mix(in srgb, var(--v-accent-400) 32%, transparent);
+        --scrollbar-thumb: color-mix(in srgb, var(--v-neutral-0) 20%, transparent);
+        --scrollbar-thumb-hover: color-mix(in srgb, var(--v-neutral-0) 32%, transparent);
+        --backdrop-color: var(--v-neutral-1000);
+
+        --code-keyword: var(--v-violet-300);
+        --code-string: var(--v-success-300);
+        --code-number: var(--v-warning-300);
+        --code-function: var(--v-accent-300);
+        --code-type: var(--v-teal-400);
+        --code-property: var(--v-danger-300);
+        --code-comment: var(--v-neutral-400);
+        --code-punctuation: var(--v-neutral-300);
+        --code-heading: var(--v-accent-200);
+        --code-link: var(--v-accent-300);
+
+        --shadow-color: var(--v-shadow-color-dark);
+        --shadow-raised: none;
+        --shadow-floating: var(--v-shadow-2-dark);
+        --shadow-overlay: var(--v-shadow-3-dark);
+    }
+}
+
+:root[data-theme="dark"] {
+    --surface-sunken: var(--v-neutral-950);
+    --surface-base: var(--v-neutral-925);
+    --surface-subtle: var(--v-neutral-900);
+    --surface-accented: var(--v-neutral-850);
+    --surface-raised: var(--v-neutral-900);
+    --surface-overlay: var(--v-neutral-850);
+    --surface-inverse: var(--v-neutral-700);
+    --surface-emphasis: var(--v-neutral-700);
+    --text-on-emphasis: var(--v-neutral-50);
+
+    --text-primary: var(--v-neutral-100);
+    --text-secondary: var(--v-neutral-300);
+    --text-tertiary: var(--v-neutral-400);
+    --text-inverse: var(--v-neutral-50);
+    --text-on-accent: var(--v-neutral-950);
+
+    --border-subtle: var(--v-neutral-850);
+    --border-default: var(--v-neutral-750);
+    --border-strong: var(--v-neutral-500);
+
+    --accent-default: var(--v-accent-400);
+    --accent-hover: var(--v-accent-300);
+    --accent-active: var(--v-accent-200);
+    --accent-subtle: color-mix(in srgb, var(--v-accent-400) 18%, transparent);
+    --accent-text: var(--v-accent-300);
+
+    --focus-ring-color: var(--v-accent-400);
+
+    --state-danger: var(--v-danger-400);
+    --state-danger-subtle: color-mix(in srgb, var(--v-danger-500) 22%, transparent);
+    --state-warning: var(--v-warning-300);
+    --state-warning-subtle: color-mix(in srgb, var(--v-warning-400) 20%, transparent);
+    --state-success: var(--v-success-300);
+    --state-success-subtle: color-mix(in srgb, var(--v-success-500) 22%, transparent);
+
+    --state-hover: color-mix(in srgb, var(--v-neutral-0) 7%, transparent);
+    --state-pressed: color-mix(in srgb, var(--v-neutral-0) 11%, transparent);
+    --state-selected: color-mix(in srgb, var(--v-neutral-0) 15%, transparent);
+
+    --selection-background: color-mix(in srgb, var(--v-accent-400) 32%, transparent);
+    --scrollbar-thumb: color-mix(in srgb, var(--v-neutral-0) 20%, transparent);
+    --scrollbar-thumb-hover: color-mix(in srgb, var(--v-neutral-0) 32%, transparent);
+    --backdrop-color: var(--v-neutral-1000);
+
+    --code-keyword: var(--v-violet-300);
+    --code-string: var(--v-success-300);
+    --code-number: var(--v-warning-300);
+    --code-function: var(--v-accent-300);
+    --code-type: var(--v-teal-400);
+    --code-property: var(--v-danger-300);
+    --code-comment: var(--v-neutral-400);
+    --code-punctuation: var(--v-neutral-300);
+    --code-heading: var(--v-accent-200);
+    --code-link: var(--v-accent-300);
+
+    --shadow-color: var(--v-shadow-color-dark);
+    --shadow-raised: none;
+    --shadow-floating: var(--v-shadow-2-dark);
+    --shadow-overlay: var(--v-shadow-3-dark);
+}

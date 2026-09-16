@@ -7,102 +7,118 @@ import { scanStylesheet } from "./css-variable-inventory.mjs";
 
 const ROOT = resolve(import.meta.dirname, "..", "..");
 const TOKENS = "apps/client/src/stylesheets/theme-lumen/tokens";
+const VELLUM_TOKENS = "apps/client/src/stylesheets/theme-vellum/tokens";
 
 type Rgba = [ number, number, number, number ];
 
 /**
- * WCAG 2.1 AA for Lumen's semantic tokens (TDD §6.6): 4.5:1 for text, 3:1 for focus indicators and
- * control borders. Translucent tokens are composited over the surface they are drawn on.
+ * WCAG 2.1 AA for the semantic tokens of the built-in token themes (TDD §6.6): 4.5:1 for text, 3:1
+ * for focus indicators and control borders. Translucent tokens are composited over the surface they
+ * are drawn on.
+ *
+ * Vellum redeclares part of Lumen's semantic layer and loads after it, so its tokens are merged over
+ * Lumen's in the order the stylesheets cascade.
  */
-describe("Lumen contrast", () => {
-    const primitives = tokensWhere("primitives.css", () => true);
-    const light = { ...primitives, ...tokensWhere("semantic.css", (selector) => selector === ":root") };
-    const dark = { ...light, ...tokensWhere("semantic.css", (selector) => selector === ":root[data-theme=\"dark\"]") };
+describeContrast("Lumen", [ TOKENS ]);
+describeContrast("Vellum", [ TOKENS, VELLUM_TOKENS ]);
 
-    const TEXT_PAIRS: [ string, string ][] = [
-        [ "--text-primary", "--surface-base" ],
-        [ "--text-primary", "--surface-sunken" ],
-        [ "--text-primary", "--surface-overlay" ],
-        [ "--text-secondary", "--surface-base" ],
-        [ "--text-secondary", "--surface-sunken" ],
-        [ "--text-secondary", "--surface-overlay" ],
-        [ "--text-tertiary", "--surface-base" ],
-        [ "--text-tertiary", "--surface-sunken" ],
-        [ "--text-tertiary", "--surface-overlay" ],
-        [ "--text-tertiary", "--surface-raised" ],
-        [ "--accent-text", "--surface-base" ],
-        [ "--accent-text", "--surface-overlay" ],
-        [ "--state-danger", "--surface-base" ],
-        [ "--state-warning", "--surface-base" ],
-        [ "--state-success", "--surface-base" ],
-        [ "--text-on-accent", "--accent-default" ],
-        [ "--text-on-accent", "--state-danger" ],
-        [ "--text-on-accent", "--state-success" ],
-        [ "--text-inverse", "--surface-inverse" ],
-        [ "--text-on-emphasis", "--surface-emphasis" ],
-        ...[ "keyword", "string", "number", "function", "type", "property", "comment", "punctuation", "heading", "link" ]
-            .map((role): [ string, string ] => [ `--code-${role}`, "--surface-base" ])
-    ];
+function describeContrast(themeName: string, dirs: string[]) {
+    describe(`${themeName} contrast`, () => {
+        const merge = (file: string, matches: (selector: string) => boolean): Record<string, string> =>
+            Object.assign({}, ...dirs.map((dir) => tokensWhere(dir, file, matches)));
+        const primitives = merge("primitives.css", () => true);
+        const light = { ...primitives, ...merge("semantic.css", (selector) => selector === ":root") };
+        const dark = { ...light, ...merge("semantic.css", (selector) => selector === ":root[data-theme=\"dark\"]") };
 
-    /** Text drawn on a translucent fill, which sits on a surface: [text, fill, surface]. */
-    const LAYERED_TEXT: [ string, string, string ][] = [
-        [ "--text-primary", "--state-selected", "--surface-sunken" ],
-        [ "--text-primary", "--state-pressed", "--surface-sunken" ],
-        [ "--text-tertiary", "--state-hover", "--surface-base" ],
-        [ "--text-tertiary", "--state-hover", "--surface-overlay" ]
-    ];
+        const TEXT_PAIRS: [ string, string ][] = [
+            [ "--text-primary", "--surface-base" ],
+            [ "--text-primary", "--surface-sunken" ],
+            [ "--text-primary", "--surface-overlay" ],
+            [ "--text-secondary", "--surface-base" ],
+            [ "--text-secondary", "--surface-sunken" ],
+            [ "--text-secondary", "--surface-overlay" ],
+            [ "--text-tertiary", "--surface-base" ],
+            [ "--text-tertiary", "--surface-sunken" ],
+            [ "--text-tertiary", "--surface-overlay" ],
+            [ "--text-tertiary", "--surface-raised" ],
+            [ "--accent-text", "--surface-base" ],
+            [ "--accent-text", "--surface-overlay" ],
+            [ "--state-danger", "--surface-base" ],
+            [ "--state-warning", "--surface-base" ],
+            [ "--state-success", "--surface-base" ],
+            [ "--text-on-accent", "--accent-default" ],
+            [ "--text-on-accent", "--state-danger" ],
+            [ "--text-on-accent", "--state-success" ],
+            [ "--text-inverse", "--surface-inverse" ],
+            [ "--text-on-emphasis", "--surface-emphasis" ],
+            ...[ "keyword", "string", "number", "function", "type", "property", "comment", "punctuation", "heading", "link" ]
+                .map((role): [ string, string ] => [ `--code-${role}`, "--surface-base" ])
+        ];
 
-    const NON_TEXT_PAIRS: [ string, string ][] = [
-        [ "--focus-ring-color", "--surface-base" ],
-        [ "--focus-ring-color", "--surface-sunken" ],
-        [ "--focus-ring-color", "--surface-overlay" ],
-        [ "--border-strong", "--surface-base" ]
-    ];
+        /** Text drawn on a translucent fill, which sits on a surface: [text, fill, surface]. */
+        const LAYERED_TEXT: [ string, string, string ][] = [
+            [ "--text-primary", "--state-selected", "--surface-sunken" ],
+            [ "--text-primary", "--state-pressed", "--surface-sunken" ],
+            [ "--text-tertiary", "--state-hover", "--surface-base" ],
+            [ "--text-tertiary", "--state-hover", "--surface-overlay" ]
+        ];
 
-    for (const [ scheme, tokens ] of [ [ "light", light ], [ "dark", dark ] ] as const) {
-        it(`meets AA for text and indicators in the ${scheme} scheme`, () => {
-            const color = (name: string) => resolveColor(name, tokens);
-            const failures: string[] = [];
-            const check = (label: string, ratio: number, minimum: number) => {
-                if (ratio < minimum) {
-                    failures.push(`${label}: ${ratio.toFixed(2)} < ${minimum}`);
-                }
-            };
-
-            for (const [ text, surface ] of TEXT_PAIRS) {
-                const background = color(surface);
-                check(`${text} on ${surface}`, contrast(over(color(text), background), background), 4.5);
-            }
-            for (const [ text, fill, surface ] of LAYERED_TEXT) {
-                const background = over(color(fill), color(surface));
-                check(`${text} on ${fill} over ${surface}`, contrast(over(color(text), background), background), 4.5);
-            }
-            for (const [ indicator, surface ] of NON_TEXT_PAIRS) {
-                const background = color(surface);
-                check(`${indicator} on ${surface}`, contrast(over(color(indicator), background), background), 3);
-            }
-
-            expect(failures).toEqual([]);
-        });
-    }
-
-    it("keeps the code editor's fallback palette equal to the --code-* tokens", async () => {
-        const { SYNTAX_FALLBACKS } = await import("../../packages/codemirror/src/themes/lumen.js");
+        const NON_TEXT_PAIRS: [ string, string ][] = [
+            [ "--focus-ring-color", "--surface-base" ],
+            [ "--focus-ring-color", "--surface-sunken" ],
+            [ "--focus-ring-color", "--surface-overlay" ],
+            [ "--border-strong", "--surface-base" ]
+        ];
 
         for (const [ scheme, tokens ] of [ [ "light", light ], [ "dark", dark ] ] as const) {
-            for (const [ role, fallback ] of Object.entries(SYNTAX_FALLBACKS[scheme])) {
-                expect(toHex(resolveColor(`--code-${role}`, tokens)), `${scheme} ${role}`).toBe(fallback);
-            }
+            it(`meets AA for text and indicators in the ${scheme} scheme`, () => {
+                const color = (name: string) => resolveColor(name, tokens);
+                const failures: string[] = [];
+                const check = (label: string, ratio: number, minimum: number) => {
+                    if (ratio < minimum) {
+                        failures.push(`${label}: ${ratio.toFixed(2)} < ${minimum}`);
+                    }
+                };
+
+                for (const [ text, surface ] of TEXT_PAIRS) {
+                    const background = color(surface);
+                    check(`${text} on ${surface}`, contrast(over(color(text), background), background), 4.5);
+                }
+                for (const [ text, fill, surface ] of LAYERED_TEXT) {
+                    const background = over(color(fill), color(surface));
+                    check(`${text} on ${fill} over ${surface}`, contrast(over(color(text), background), background), 4.5);
+                }
+                for (const [ indicator, surface ] of NON_TEXT_PAIRS) {
+                    const background = color(surface);
+                    check(`${indicator} on ${surface}`, contrast(over(color(indicator), background), background), 3);
+                }
+
+                expect(failures).toEqual([]);
+            });
+        }
+
+        // The editor theme reads the `--code-*` tokens live, so it follows whichever token theme is
+        // active; only its own fallbacks, which stand in when neither is, are Lumen's.
+        if (themeName === "Lumen") {
+            it("keeps the code editor's fallback palette equal to the --code-* tokens", async () => {
+                const { SYNTAX_FALLBACKS } = await import("../../packages/codemirror/src/themes/lumen.js");
+
+                for (const [ scheme, tokens ] of [ [ "light", light ], [ "dark", dark ] ] as const) {
+                    for (const [ role, fallback ] of Object.entries(SYNTAX_FALLBACKS[scheme])) {
+                        expect(toHex(resolveColor(`--code-${role}`, tokens)), `${scheme} ${role}`).toBe(fallback);
+                    }
+                }
+            });
         }
     });
-});
+}
 
 function toHex([ r, g, b ]: Rgba) {
     return `#${[ r, g, b ].map((channel) => Math.round(channel).toString(16).padStart(2, "0")).join("")}`;
 }
 
-function tokensWhere(file: string, matches: (selector: string) => boolean) {
-    const { definitions } = scanStylesheet(readFileSync(join(ROOT, TOKENS, file), "utf-8"), file);
+function tokensWhere(dir: string, file: string, matches: (selector: string) => boolean) {
+    const { definitions } = scanStylesheet(readFileSync(join(ROOT, dir, file), "utf-8"), file);
     return Object.fromEntries(definitions.filter((d) => matches(d.selector)).map((d) => [ d.name, d.value ]));
 }
 

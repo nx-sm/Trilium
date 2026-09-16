@@ -1,0 +1,24 @@
+/*
+ * Vellum: a document-first variant of Lumen. `services/theme.ts` loads the Next stylesheets of the
+ * matching colour scheme, then `theme-lumen.css`, then this file, so Vellum inherits Lumen's aliases,
+ * chrome and icon font, and redeclares only the semantic tokens it means to differ on: warmer
+ * neutrals, borders that recede into the background, smaller radii, a looser reading rhythm.
+ *
+ * Almost everything Vellum changes therefore arrives through tokens. The chrome layer holds only what
+ * no token reaches: the rhythm of the note itself, the space around its title, and the tree's active
+ * row, which Lumen marks with an accent bar that a document surface would not draw.
+ *
+ * What Vellum deliberately leaves alone:
+ *
+ * - font sizes and families, which belong to the user (`--main-font-size`, `--tree-font-size` and
+ *   `--detail-font-*` come from the font options through `/api/fonts`, and Lumen's keep-list leaves
+ *   them at Next's values);
+ * - the width of the note, which `root_container.ts` sets on `body` from the `maxContentWidth` option;
+ * - note tree row height and vertical padding, which FancyTree measures for its drop zones.
+ */
+
+@import url(./theme-vellum/tokens/primitives.css);
+@import url(./theme-vellum/tokens/semantic.css);
+
+@import url(./theme-vellum/chrome/content.css);
+@import url(./theme-vellum/chrome/tree.css);

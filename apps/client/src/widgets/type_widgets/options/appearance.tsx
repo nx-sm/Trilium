@@ -54,6 +54,12 @@ const THEME_FAMILIES: ThemeFamily[] = [
         schemes: THEME_FAMILY_SCHEMES.lumen
     },
     {
+        key: "vellum",
+        title: t("theme.vellum_themes"),
+        icon: "bx bx-book-content",
+        schemes: THEME_FAMILY_SCHEMES.vellum
+    },
+    {
         key: "legacy",
         title: t("theme.legacy_themes"),
         icon: "bx bx-history",

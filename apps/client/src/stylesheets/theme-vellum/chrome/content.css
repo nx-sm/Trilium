@@ -1,0 +1,33 @@
+/*
+ * The note itself: the rhythm of the text and the space around its title.
+ *
+ * `--line-height-content` is the one semantic token nothing reads — Lumen declares it, but no rule
+ * consumes it — so Vellum applies it here. CKEditor puts `.ck-content` on the editable body and on
+ * the read-only one, so a single rule covers both, and `--ck-content-line-height` carries the same
+ * value for anything that reads the variable instead.
+ *
+ * Type size and family are not Vellum's to set: `--detail-font-size` and `--detail-font-family` come
+ * from the user's font options.
+ */
+
+html:root .ck-content {
+    --ck-content-line-height: var(--line-height-content);
+
+    line-height: var(--line-height-content);
+}
+
+/*
+ * Room around the title. Its size stays at the layout's 1.8em of the note's own type, so it follows
+ * the user's font options; only the space around it changes.
+ */
+html:root .inline-title {
+    padding-top: var(--space-2xl);
+}
+
+html:root .inline-title > .inline-title-row {
+    gap: var(--space-lg);
+}
+
+html:root .inline-title .title-details {
+    margin-top: var(--space-xs);
+}

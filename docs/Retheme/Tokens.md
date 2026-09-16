@@ -4,6 +4,9 @@ Lumen is the re-theme's token layer (TDD §3), shipped as a built-in theme famil
 OS colour scheme, `lumen-light` and `lumen-dark` pin one. It is layered over Next, so every structural
 rule of the Next theme still applies; Lumen changes type and colour through custom properties.
 
+[Vellum](Vellum.md) is a second token layer over Lumen, and reaches the theme contract through the
+aliases described here.
+
 ## How it loads
 
 `services/theme.ts` resolves a Lumen theme to the Next stylesheets of the same scheme, then
@@ -191,7 +194,7 @@ theme; the Lumen editor theme exists only where `packages/codemirror` ships it.
 | Guard | What it enforces | Run |
 | --- | --- | --- |
 | `scripts/retheme/lumen-contract.spec.ts` | Every contract variable aliased or kept; aliases at `html:root` and only on semantic tokens; semantic tokens only on primitives; identical dark tiers | `pnpm exec vitest run --project scripts scripts/retheme` |
-| `scripts/retheme/lumen-contrast.spec.ts` | WCAG AA in light and dark: 4.5:1 for text pairs and syntax colours (translucent fills composited over their surface), 3:1 for focus rings and strong borders; the code editor's fallback palette equals the `--code-*` tokens | same |
+| `scripts/retheme/lumen-contrast.spec.ts` | WCAG AA in light and dark, for Lumen and for Vellum over it: 4.5:1 for text pairs and syntax colours (translucent fills composited over their surface), 3:1 for focus rings and strong borders; the code editor's fallback palette equals Lumen's `--code-*` tokens | same |
 | `scripts/retheme/build-lumen-icons.spec.ts` | The icon font draws exactly the Boxicons codepoints the inventory remaps, centred like Boxicons, and its face covers only those; the icon stylesheet covers every stylesheet rule that names the Boxicons font | `pnpm exec vitest run --project scripts scripts/retheme` |
 | `trilium/token-values` (`scripts/stylelint/token-values.mts`) | No raw colour, font size or spacing in `stylesheets/theme-lumen/**` outside the primitives | `pnpm --filter client stylelint` |
 

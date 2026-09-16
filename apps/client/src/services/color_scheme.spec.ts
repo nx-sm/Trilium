@@ -10,6 +10,9 @@ describe("resolveColorScheme", () => {
         expect(resolveColorScheme("lumen")).toEqual({ family: "lumen", scheme: "system", isCustom: false });
         expect(resolveColorScheme("lumen-light")).toEqual({ family: "lumen", scheme: "light", isCustom: false });
         expect(resolveColorScheme("lumen-dark")).toEqual({ family: "lumen", scheme: "dark", isCustom: false });
+        expect(resolveColorScheme("vellum")).toEqual({ family: "vellum", scheme: "system", isCustom: false });
+        expect(resolveColorScheme("vellum-light")).toEqual({ family: "vellum", scheme: "light", isCustom: false });
+        expect(resolveColorScheme("vellum-dark")).toEqual({ family: "vellum", scheme: "dark", isCustom: false });
         expect(resolveColorScheme("auto")).toEqual({ family: "legacy", scheme: "system", isCustom: false });
         expect(resolveColorScheme("light")).toEqual({ family: "legacy", scheme: "light", isCustom: false });
         expect(resolveColorScheme("dark")).toEqual({ family: "legacy", scheme: "dark", isCustom: false });
@@ -31,6 +34,10 @@ describe("getNextColorSchemeTheme", () => {
         expect(getNextColorSchemeTheme("lumen")).toBe("lumen-light");
         expect(getNextColorSchemeTheme("lumen-light")).toBe("lumen-dark");
         expect(getNextColorSchemeTheme("lumen-dark")).toBe("lumen");
+
+        expect(getNextColorSchemeTheme("vellum")).toBe("vellum-light");
+        expect(getNextColorSchemeTheme("vellum-light")).toBe("vellum-dark");
+        expect(getNextColorSchemeTheme("vellum-dark")).toBe("vellum");
 
         expect(getNextColorSchemeTheme("auto")).toBe("light");
         expect(getNextColorSchemeTheme("light")).toBe("dark");

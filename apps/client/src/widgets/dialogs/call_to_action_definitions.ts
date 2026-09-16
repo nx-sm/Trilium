@@ -91,7 +91,7 @@ const CALL_TO_ACTIONS: CallToAction[] = [
         id: "next_theme",
         title: t("call_to_action.next_theme_title"),
         message: t("call_to_action.next_theme_message"),
-        enabled: () => ![ "modern", "lumen" ].includes(resolveColorScheme(options.get("theme")).family ?? ""),
+        enabled: () => ![ "modern", "lumen", "vellum" ].includes(resolveColorScheme(options.get("theme")).family ?? ""),
         buttons: [
             {
                 text: t("call_to_action.next_theme_button"),

@@ -252,10 +252,12 @@ const defaultOptions: DefaultOption[] = [
                 case "light":
                 case "next-light":
                 case "lumen-light":
+                case "vellum-light":
                     return "default:vs-code-light";
                 case "dark":
                 case "next-dark":
                 case "lumen-dark":
+                case "vellum-dark":
                 default:
                     return "default:vs-code-dark";
             }

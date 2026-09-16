@@ -1,0 +1,106 @@
+/*
+ * Vellum primitives: raw values with no meaning of their own. Only `semantic.css` reads them.
+ *
+ * Where Lumen's neutral ramp is slightly cool, Vellum's carries a trace of warmth, which is what
+ * makes a page of text read as paper rather than as a panel. The steps are the same ones Lumen
+ * declares, so the two themes stay swappable token for token.
+ */
+
+:root {
+    /* Neutral: warm grey, mixed from the text colour rather than pure black. */
+    --v-neutral-0: #ffffff;
+    --v-neutral-50: #faf9f7;
+    --v-neutral-100: #f4f2ef;
+    --v-neutral-150: #edeae5;
+    --v-neutral-200: #e4e0d9;
+    --v-neutral-300: #d3cec5;
+    --v-neutral-400: #b0a99d;
+    --v-neutral-500: #857e72;
+    --v-neutral-600: #6b655b;
+    --v-neutral-650: #5d584f;
+    --v-neutral-700: #4a453e;
+    --v-neutral-750: #3b3731;
+    --v-neutral-800: #2f2c27;
+    --v-neutral-850: #262320;
+    --v-neutral-900: #1f1d1a;
+    --v-neutral-925: #1a1815;
+    --v-neutral-950: #151310;
+    --v-neutral-1000: #0d0c0a;
+
+    /* Accent: a plain, slightly desaturated blue that stays out of the way of the text. */
+    --v-accent-50: #eef4fb;
+    --v-accent-100: #dae8f7;
+    --v-accent-200: #bcd5f1;
+    --v-accent-300: #93b9e6;
+    --v-accent-400: #6497d8;
+    --v-accent-500: #3f7ac6;
+    --v-accent-600: #2f63ab;
+    --v-accent-700: #29528b;
+    --v-accent-800: #26466f;
+    --v-accent-900: #223c5c;
+    --v-accent-950: #16263a;
+
+    --v-danger-50: #fdf2f1;
+    --v-danger-100: #fbe2e0;
+    --v-danger-200: #f6c8c4;
+    --v-danger-300: #eb9d97;
+    --v-danger-400: #dc6d66;
+    --v-danger-500: #c74b45;
+    --v-danger-600: #ab3833;
+    --v-danger-700: #8c2e2a;
+    --v-danger-800: #742926;
+    --v-danger-900: #612724;
+    --v-danger-950: #351110;
+
+    --v-warning-50: #fdf6ec;
+    --v-warning-100: #f9e9cf;
+    --v-warning-200: #f2d2a1;
+    --v-warning-300: #e8b268;
+    --v-warning-400: #dd9440;
+    --v-warning-500: #c97a26;
+    --v-warning-600: #a95f1e;
+    --v-warning-700: #88491d;
+    --v-warning-800: #703c1d;
+    --v-warning-900: #5d331c;
+    --v-warning-950: #35190c;
+
+    --v-success-50: #f0f6ef;
+    --v-success-100: #dcebda;
+    --v-success-200: #bcd8b9;
+    --v-success-300: #92bd8e;
+    --v-success-400: #679d63;
+    --v-success-500: #4b8248;
+    --v-success-600: #396736;
+    --v-success-700: #2f522d;
+    --v-success-800: #294327;
+    --v-success-900: #233722;
+    --v-success-950: #101d10;
+
+    --v-violet-500: #7c5cc4;
+    --v-violet-600: #6a48b0;
+    --v-violet-300: #b49ae4;
+    --v-violet-400: #9a7cd8;
+
+    --v-teal-400: #4fa9a2;
+    --v-teal-600: #2f7a74;
+    --v-teal-700: #276661;
+
+    /* Elevation: Vellum separates surfaces by tint, so its shadows are barely there. */
+    --v-shadow-color-light: rgb(31 29 26 / 8%);
+    --v-shadow-color-dark: rgb(0 0 0 / 40%);
+    --v-shadow-1: 0 1px 2px rgb(31 29 26 / 6%);
+    --v-shadow-2: 0 2px 8px rgb(31 29 26 / 8%);
+    --v-shadow-3: 0 8px 24px rgb(31 29 26 / 12%);
+    --v-shadow-2-dark: 0 2px 8px rgb(0 0 0 / 40%);
+    --v-shadow-3-dark: 0 8px 24px rgb(0 0 0 / 52%);
+
+    /* Radius: small and even, the way a document app rounds a control rather than a card. */
+    --v-radius-sm: 3px;
+    --v-radius-md: 4px;
+    --v-radius-lg: 6px;
+    --v-radius-xl: 10px;
+
+    /* Rhythm: the space a reading surface needs, which is more than a dense app's. */
+    --v-leading-tight: 1.45;
+    --v-leading-relaxed: 1.75;
+}
