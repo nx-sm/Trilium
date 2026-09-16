@@ -7,6 +7,8 @@ Icons are useful for distinguishing notes and are displayed near the note title,
 
 While editing a note, click on the icon next to the title to bring up a chooser gallery.
 
+Under the Vellum and Lumen themes, the icons those themes remap are shown in their Tabler equivalents, in the gallery as well as in the tree.
+
 Icons can be inherited through the use of <a class="reference-link" href="../../Advanced%20Usage/Templates.md">Templates</a>, or <a class="reference-link" href="../../Advanced%20Usage/Attributes/Attribute%20Inheritance.md">Attribute Inheritance</a>.
 
 > [!NOTE]

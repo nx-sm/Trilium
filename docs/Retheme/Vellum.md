@@ -112,12 +112,17 @@ node scripts/retheme/bundle-theme.mts --theme vellum
 ```
 
 writes `dist/retheme/vellum-theme.css` (gitignored): Lumen's stylesheets inlined first, then Vellum's,
-each file carried once, with the icon font embedded as a data URL. It is 87 KB gzipped against Lumen's
-83 KB — the difference is Vellum's own layer, and about 73 KB of either is the font.
+each file carried once, with the icon font embedded as a data URL. It is 86 KB gzipped against Lumen's
+81 KB — the difference is Vellum's own layer, and about 73 KB of either is the font.
 
 Install it as a CSS code note labelled `#appTheme=vellum-standalone` and `#appThemeBase=next`, chosen
 under Settings → Appearance. As a user theme it follows the operating system's colour scheme, because
-Trilium offers no colour-scheme choice for custom themes.
+Trilium offers no colour-scheme choice for custom themes — the switcher greys out and says so.
+
+That path has been walked, not just built: the bundle was installed into a fixture instance exactly as
+a reader would (a CSS code note carrying the two labels, then the `theme` option pointed at it) and
+photographed. It renders as the built-in theme does, icons included, which is the point of embedding
+the font.
 
 ## Guards
 

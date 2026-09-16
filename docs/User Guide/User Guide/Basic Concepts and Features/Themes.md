@@ -1,7 +1,14 @@
 # Themes
 ## Default Themes
 
-Trilium comes with a couple pre-installed color themes, with the default being a light theme. To switch to a dark theme or any other available theme, navigate to the Options menu (accessible via the app icon in the top-left corner), select the Appearance tab, and choose your preferred theme.
+Trilium comes with four built-in theme families. To switch between them, navigate to the Options menu (accessible via the app icon in the top-left corner), select the Appearance tab, and choose your preferred theme.
+
+*   **Vellum** is the default: a document-first theme, with warm neutrals, borders that recede into the background, and text sized for reading rather than for a dense application.
+*   **Lumen** is the same design in a cooler, more neutral palette.
+*   **Modern** was the default before Vellum.
+*   **Legacy** keeps the original light and dark themes.
+
+Each family offers its own colour scheme: follow the operating system, or pin light or dark. Vellum and Lumen also draw the interface icons from [Tabler Icons](https://tabler.io/icons), where the other themes use Boxicons.
 
 ![Dark Theme](Themes_dark-theme.png)
 

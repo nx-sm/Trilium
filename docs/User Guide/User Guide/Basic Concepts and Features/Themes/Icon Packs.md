@@ -3,6 +3,8 @@
 
 By default, Trilium comes with a set of icons called Boxicons v2. Since v0.102.0, custom icon packs allow a wider selection of icons for notes.
 
+The Vellum and Lumen themes draw the interface's own icons from [Tabler Icons](https://tabler.io/icons) instead. That reaches note icons as well: a note whose icon is one of the Boxicons those themes remap is drawn in its Tabler equivalent, while every other icon, and every custom icon pack, is left as it is.
+
 Icon packs are specific to Trilium, so they must either be created from scratch (see below) or imported from a ZIP file from a third-party developer.
 
 ## Sample icon packs
