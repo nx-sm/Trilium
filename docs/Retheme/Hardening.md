@@ -96,7 +96,8 @@ token theme. It lives in the shared suite, so both e2e projects run it: `pnpm --
 `pnpm --filter standalone e2e`, six tests per theme. Every test switches the theme, waits for its
 stylesheet, exercises the interaction and restores it afterwards.
 
-Run inside the whole shared suite rather than on its own, all twelve of its tests pass. The suite
+All twelve pass under both projects: inside the whole `server` suite, and on their own under
+`standalone` (`pnpm --filter standalone e2e theme_interaction`, 51 s, no retries). The server suite
 itself is not green locally, and was not before this theme work: seven tests fail — the mobile
 translation check, both launcher and tree activation tests, three PDF tests and the maths popup — and
 every one of them runs before this spec, so neither it nor the theme can be their cause. Measured by
