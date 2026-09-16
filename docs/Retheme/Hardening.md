@@ -44,6 +44,20 @@ Defects found, none caused by Lumen:
   dialog at 1280 px.
 - The German catalogue has no translation for the description of "Use different fonts".
 
+Repeated for Vellum once it set its own type sizes, and now that it is the default: a 144-shot baseline
+and 46 shots per locale, no failures. Its smaller interface type and looser reading rhythm change none
+of the outcomes above.
+
+| Locale | Result under Vellum |
+| --- | --- |
+| Arabic (`ar`) | Mirrors as before: launcher and tree on the right, the outline panel on the left, tabs and breadcrumbs flowing leftwards. The active tree row, which Vellum marks with a fill rather than Lumen's accent bar, stays legible mirrored. |
+| German (`de`) | Labels still fit; the settings sidebar truncates "Passwort & Authentifizierung" with an ellipsis rather than overflowing. |
+| Russian (`ru`) | At 360 px, long labels wrap onto two lines with no overflow, and read at the 14 px interface size. |
+| Chinese (`cn`) | Renders without clipping at that size, and the line height leaves the glyphs room. |
+
+Both defects found under Lumen are still there, and still not a theme's doing: the layout-style card cut
+off by the dialog at 1280 px, and the untranslated German description of "Use different fonts".
+
 UK conventions: `firstDayOfWeek` defaults to `1` (Monday) in `options_init.ts`, and both the calendar
 collection and date notes read it. Date and time formats were not examined.
 
