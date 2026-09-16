@@ -77,20 +77,28 @@ sheet runs past the left edge of the viewport, while in English it fits.
 
 ## Interaction regression checklist (§6.3)
 
-`packages/trilium-e2e/src/theme_lumen.spec.ts` drives most of the checklist with Lumen active. It
-lives in the shared suite, so both e2e projects run it: `pnpm --filter server e2e` and
-`pnpm --filter standalone e2e`, six tests each. Every test switches the theme to Lumen, waits for its
-stylesheet, exercises the interaction and restores the theme.
+`packages/trilium-e2e/src/theme_interaction.spec.ts` drives most of the checklist under each built-in
+token theme. It lives in the shared suite, so both e2e projects run it: `pnpm --filter server e2e` and
+`pnpm --filter standalone e2e`, six tests per theme. Every test switches the theme, waits for its
+stylesheet, exercises the interaction and restores it afterwards.
+
+Run inside the whole shared suite rather than on its own, all twelve of its tests pass. The suite
+itself is not green locally, and was not before this theme work: seven tests fail — the mobile
+translation check, both launcher and tree activation tests, three PDF tests and the maths popup — and
+every one of them runs before this spec, so neither it nor the theme can be their cause. Measured by
+running the suite with only the default theme differing: ten failures with `next`, nine with `vellum`,
+and seven once this spec restored the theme it had found and unhoisted the tree before starting. Those
+last three were this spec's own leavings, which had been breaking `tree.spec.ts` after it.
 
 | Checklist item | Covered |
 | --- | --- |
-| Tree: expand and collapse, multi-select, drag reordering | This spec, under Lumen |
+| Tree: expand and collapse, multi-select, drag reordering | This spec, under Lumen and Vellum |
 | Tree: hoisting | `layout/tree.spec.ts`, under the default theme |
-| Tab bar: open and close | This spec, under Lumen |
+| Tab bar: open and close | This spec, under Lumen and Vellum |
 | Tab bar: reorder, split view | `layout/tab_bar.spec.ts` and `layout/split_pane.spec.ts`, under the default theme |
 | Context menus at viewport edges | This spec: opened against the bottom edge, it stays inside the viewport and still closes on a click outside |
 | CKEditor toolbar overflow at narrow widths | This spec: the classic toolbar at 800 px stays inside its bar, and its overflow group opens inside the viewport |
-| Collection view switching (table → calendar → board) | This spec, under Lumen |
+| Collection view switching (table → calendar → board) | This spec, under Lumen and Vellum |
 | Mind Elixir pointer input | This spec: a node opens its panel |
 | `F1` in-app help | `help.spec.ts`, under the default theme |
 | Other keyboard shortcuts | **Not covered.** |

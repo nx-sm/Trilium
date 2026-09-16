@@ -5,6 +5,12 @@ Vellum is a document-first variant of [Lumen](Tokens.md), shipped as a built-in 
 a narrower question than Lumen does — what Trilium looks like when the note, rather than the
 application around it, is the brightest and busiest thing on screen.
 
+**It is the default.** `options_init.ts` creates the `theme` option as `vellum`, and
+`bootstrap_utils.ts` names it for the setup screens, which run before a database exists to hold the
+option. Both had to change: a fresh install would otherwise open in one theme and then create itself
+in another. Databases that already exist keep whatever theme they were set to, since the default only
+applies when the option is first created.
+
 ## How it loads
 
 Vellum is a second token layer over Lumen, so `services/theme.ts` resolves it to three stylesheets:

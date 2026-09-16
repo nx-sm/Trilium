@@ -37,7 +37,7 @@ describe("bootstrap_utils (real DB)", () => {
         const items = getSharedBootstrapItems(ASSET_PATH, false);
 
         expect(items.dbInitialized).toBe(false);
-        expect(items.theme).toBe("next");
+        expect(items.theme).toBe("vellum");
         expect(items.themeCssUrl).toBe(false);
         expect(items.appCssNoteIds).toEqual([]);
         // Common items + icon config are always present.

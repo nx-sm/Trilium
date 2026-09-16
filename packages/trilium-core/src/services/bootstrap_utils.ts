@@ -44,7 +44,7 @@ export default function getSharedBootstrapItems(assetPath: string, dbInitialized
     if (!dbInitialized) {
         return {
             ...commonItems,
-            theme: "next",
+            theme: "vellum",
             themeCssUrl: false as const,
             themeUseNextAsBase: "next" as const,
             appCssNoteIds: [],

@@ -96,7 +96,8 @@ const CALL_TO_ACTIONS: CallToAction[] = [
             {
                 text: t("call_to_action.next_theme_button"),
                 async onClick() {
-                    await options.save("theme", "next");
+                    // The theme a reader on a legacy one is offered is the one a new database gets.
+                    await options.save("theme", "vellum");
                     await options.save("backgroundEffects", "true");
                     utils.reloadFrontendApp("call-to-action");
                 }

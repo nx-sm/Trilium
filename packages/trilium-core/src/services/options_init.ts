@@ -68,7 +68,7 @@ export async function initNotSyncedOptions(initialized: boolean, opts: NotSynced
     createNotSyncedOption("lastSyncedPull", "0");
     createNotSyncedOption("lastSyncedPush", "0");
 
-    createNotSyncedOption("theme", "next");
+    createNotSyncedOption("theme", "vellum");
 
     createNotSyncedOption("syncServerHost", opts.syncServerHost || "");
     createNotSyncedOption("syncServerTimeout", "120"); // 120 seconds (2 minutes)
